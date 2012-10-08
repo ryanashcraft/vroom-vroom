@@ -7,7 +7,6 @@
 using namespace v8;
 
 int main(int argc, char* argv[]) {
-
   // Create a stack-allocated handle scope.
   HandleScope handle_scope;
 
@@ -18,7 +17,18 @@ int main(int argc, char* argv[]) {
   // running the hello world script. 
   Context::Scope context_scope(context);
 
-  std::ifstream t("example.js");
+  if (argc < 2) {
+    fprintf(stderr, "ERROR: no file requested\n");
+    return  EXIT_FAILURE;
+  }
+
+  std::ifstream t(argv[1]);
+
+  if (!t.is_open()) {
+    fprintf(stderr, "ERROR: (404) file not found\n");
+    return  EXIT_FAILURE;
+  }
+
   std::string str;
 
   t.seekg(0, std::ios::end);   
