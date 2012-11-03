@@ -7,8 +7,8 @@
 class Server {
 public:
 	Server(unsigned short port);
-	void handle();
-private:
+	virtual void handle() = 0;
+protected:
 	unsigned short port_;
 	Socket socket_;
 };

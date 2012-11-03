@@ -9,16 +9,18 @@
 
 #include <string>
 
+#include "socket_exception.h"
+
 class Socket {
 public:
 	Socket();
 	Socket(int descriptor_);
-	~Socket();
 	void bind(unsigned short port);
 	void listen(unsigned int max_requests=5);
 	Socket accept();
 	int receive(unsigned int buffer_size, char* buffer);
-	void send(char* buffer, int message_size);
+	void send(std::string& message);
+	void close();
 private:
 	int descriptor_;
 };

@@ -1,20 +1,18 @@
 
+#include <sstream>
+
 #include "socket.h"
 
 using namespace std;
 
 Socket::Socket() {
 	if ((descriptor_ = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-		// exception
+		throw SocketException("socket could now be initialized");
     }
 }
 
 Socket::Socket(int descriptor) : descriptor_(descriptor) {
 
-}
-
-Socket::~Socket() {
-	::close(descriptor_);
 }
 
 void Socket::bind(unsigned short port) {
@@ -27,7 +25,9 @@ void Socket::bind(unsigned short port) {
 
     /* Bind to the local address */
     if (::bind(descriptor_, (struct sockaddr *) &address, sizeof(address)) < 0) {
-    	// exception
+        stringstream message;
+        message << "socket could now be binded to port " << port;
+    	throw SocketException(message.str());
     }
 }
 
@@ -56,14 +56,18 @@ int Socket::receive(unsigned int buffer_size, char* buffer) {
 
     /* Receive message from client */
     if ((message_size = ::recv(descriptor_, buffer, buffer_size, 0)) < 0) {
-    	// exception	
+    	throw SocketException("socket receive failed");	
     }
 
     return message_size;
 }
 
-void Socket::send(char* buffer, int message_size) {
-	if (::send(descriptor_, buffer, message_size, 0) != message_size) {
+void Socket::send(string& message) {
+	if (::send(descriptor_, message.c_str(), message.length(), 0) != message.length()) {
 		// exception
 	}
+}
+
+void Socket::close() {
+    ::close(descriptor_);
 }

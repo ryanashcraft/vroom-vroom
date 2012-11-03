@@ -14,6 +14,9 @@ lflags=-lpthread
 all:
 	$(CC) -I$(v8incs) $(cflags) $(sources) -o $(target) $(v8) $(lflags)
 
+run:	all
+	./$(target)
+
 clean:
 	rm $(target) $(bins) 
 
