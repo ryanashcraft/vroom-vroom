@@ -11,7 +11,7 @@
 
 class Socket {
 public:
-	Socket(std::string address, int port);
+	Socket();
 	Socket(int descriptor_);
 	~Socket();
 	void bind(unsigned short port);

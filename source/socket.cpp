@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Socket::Socket(string address, int port) {
+Socket::Socket() {
 	if ((descriptor_ = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
 		// exception
     }
