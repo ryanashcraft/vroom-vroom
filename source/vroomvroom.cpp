@@ -4,9 +4,13 @@
 #include <string>
 #include <streambuf>
 
+#include "server.h"
+
 using namespace v8;
 
 int main(int argc, char* argv[]) {
+  Server s;
+
   // Create a stack-allocated handle scope.
   HandleScope handle_scope;
 
