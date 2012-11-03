@@ -9,7 +9,8 @@
 using namespace v8;
 
 int main(int argc, char* argv[]) {
-  Server s;
+  Server s(8000);
+  s.handle();
 
   // Create a stack-allocated handle scope.
   HandleScope handle_scope;
