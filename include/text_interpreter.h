@@ -11,7 +11,7 @@ class TextInterpreter : public FileInterpreter {
 public:
 	explicit TextInterpreter(const std::string& path);
 	std::string mime() {
-		return "text";
+		return "text/plain";
 	}
 	std::string interpret();
 };

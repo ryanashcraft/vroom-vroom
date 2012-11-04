@@ -5,11 +5,14 @@
 #include <string>
 #include <fstream>
 
-#include "text_interpreter.h"
+#include "file_interpreter.h"
 
-class VroomVroomInterpreter : public TextInterpreter {
+class VroomVroomInterpreter : public FileInterpreter {
 public:
 	explicit VroomVroomInterpreter(const std::string& path);
+	std::string mime() {
+		return "text/html";
+	}
 	std::string interpret();
 };
 

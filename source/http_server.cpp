@@ -70,7 +70,7 @@ string HTTPServer::process(const string& message) {
 			return NotFound();
 		}
 
-		return OK(content);
+		return OK(content, interpreter.get()->mime());
 	}
 
 	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
@@ -85,11 +85,11 @@ bool HTTPServer::is_valid_http_message(string& message) {
 	return false;
 }
 
-string HTTPServer::OK(const string& message) {
+string HTTPServer::OK(const string& message, const string mime) {
 	stringstream response;
 	response << "HTTP/1.0 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: text/html" << endl;
+	response << "Content-Type: " << mime << endl;
 	response << "Content-Length: " << message.length() - 1 << endl;
 	response << message;
 	return response.str();
