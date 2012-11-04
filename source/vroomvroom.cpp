@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 	if (argc == 2) {
 		port = atoi(argv[1]);
 	} else if (argc == 1) {
-		port = 80;
+		port = 8000;
 	} else {
 		usage();
 		return -1;

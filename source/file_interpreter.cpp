@@ -16,9 +16,7 @@ FileInterpreter::FileInterpreter(const string& path) : path_(path) {
 
 unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const string& path) {
 	string extension = get_extension_from_path(path);
-
-	cout << "extension:!" <<  extension << endl;
-
+	
 	if (extension == "vv") {
 		return unique_ptr<FileInterpreter>(new VroomVroomInterpreter(path));
 	}
