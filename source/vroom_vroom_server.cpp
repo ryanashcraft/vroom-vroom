@@ -28,7 +28,14 @@ string VroomVroomServer::process(const string& message) {
 
 		path.erase(0, 1);
 
-		return OK(interpret(path));
+		string message = "";
+		try {
+			message = interpret(path);
+		} catch (const HTTPException& e) {
+			return NotFound();
+		}
+
+		return OK(message);
 	}
 
 	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
@@ -51,9 +58,7 @@ string VroomVroomServer::interpret(const string& path) {
 	std::ifstream t(path);
 
 	if (!t.is_open()) {
-		fprintf(stderr, "ERROR: (404) file not found at path %s\n", path.c_str());
-		// exception
-		return "";
+		throw HTTPException(404, path);
 	}
 
 	std::string str;

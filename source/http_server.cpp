@@ -94,3 +94,13 @@ string HTTPServer::BadRequest(const string& message) {
 	response << message;
 	return response.str();
 }
+
+string HTTPServer::NotFound(const string& message) {
+	stringstream response;
+	response << "HTTP/1.0 404 Not Found" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+	response << "Content-Type: text/html" << endl;
+	response << "Content-Length: " << message.length() << endl;
+	response << message;
+	return response.str();
+}

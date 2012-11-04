@@ -3,6 +3,7 @@
 #define HTTP_SERVER_H_
 
 #include "server.h"
+#include "http_exception.h"
 
 class HTTPServer : public Server {
 public:
@@ -13,6 +14,7 @@ protected:
 	virtual std::string process(const std::string& message);
 	std::string OK(const std::string& message);
 	std::string BadRequest(const std::string& message);
+	std::string NotFound(const std::string& message="");
 private:
 	bool is_valid_http_message(std::string& message);
 	std::string file_to_string(const std::string& path);
