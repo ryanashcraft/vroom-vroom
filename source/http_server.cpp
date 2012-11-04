@@ -18,7 +18,10 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 void HTTPServer::handle() {
 	Socket client = socket_.accept();
 	string reply = process(accept(client));
+
+	cout << "========================" << endl;
 	cout << reply << endl;
+
 	client.send(reply);
 	client.close();
 }
@@ -43,21 +46,39 @@ string HTTPServer::accept(Socket& client) {
 
 
 string HTTPServer::process(const string& message) {
-	string path;
+	string type;
 	std::stringstream trimmer;
 	trimmer << message;
-	trimmer >> path;
+	trimmer >> type;
 
-	return file_to_string(path);
+	if (type == "GET") {
+		string path;
+		trimmer << message;
+		trimmer >> path;
+
+		// remove absolute URL forward slash
+		path.erase(0, 1);
+
+		string content = "";
+		try {
+			content = file_to_string(path);
+		} catch (const HTTPException& e) {
+			fprintf(stderr, "NOT FOUND: %s\n", path.c_str());
+			return NotFound();
+		}
+
+		return OK(content);
+	}
+
+	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
+	return BadRequest("");
 }
 
 string HTTPServer::file_to_string(const string& path) {
 	ifstream file(path);
 
 	if (!file.is_open()) {
-		fprintf(stderr, "ERROR: (404) file not found at path %s\n", path.c_str());
-		// exception
-		return "";
+		throw HTTPException(404, path);
 	}
 
 	std::stringstream buffer;

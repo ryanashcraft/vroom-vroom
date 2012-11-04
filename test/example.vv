@@ -19,7 +19,7 @@
 				},
 				'script': {
 					attr: [
-						{'src':'main.js'}
+						{'src':'/test/main.js'}
 					]
 				}
 			},

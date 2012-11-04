@@ -29,19 +29,22 @@ string VroomVroomServer::process(const string& message) {
 		// remove absolute URL forward slash
 		path.erase(0, 1);
 
-		string content = "";
-		try {
-			content = interpret(path);
-		} catch (const HTTPException& e) {
-			fprintf(stderr, "NOT FOUND: %s\n", path.c_str());
-			return NotFound();
+		if (path.substr(path.length() - 2) == "vv") {
+			string content = "";
+			try {
+				content = interpret(path);
+			} catch (const HTTPException& e) {
+				fprintf(stderr, "NOT FOUND: %s\n", path.c_str());
+				return NotFound();
+			}
+
+			return OK(content);
 		}
 
-		return OK(content);
+		return HTTPServer::process(message);
 	}
 
 	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
-
 	return BadRequest("");
 }
 
