@@ -17,7 +17,6 @@ protected:
 	std::string NotFound(const std::string& message="");
 private:
 	bool is_valid_http_message(std::string& message);
-	std::string file_to_string(const std::string& path);
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 #include "http_server.h"
 #include "date.h"
+#include "file_interpreter.h"
 
 using namespace std;
 
@@ -59,9 +60,11 @@ string HTTPServer::process(const string& message) {
 		// remove absolute URL forward slash
 		path.erase(0, 1);
 
+		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
+
 		string content = "";
 		try {
-			content = file_to_string(path);
+			content = interpreter.get()->interpret();
 		} catch (const HTTPException& e) {
 			fprintf(stderr, "NOT FOUND: %s\n", path.c_str());
 			return NotFound();
@@ -72,20 +75,6 @@ string HTTPServer::process(const string& message) {
 
 	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
 	return BadRequest("");
-}
-
-string HTTPServer::file_to_string(const string& path) {
-	ifstream file(path);
-
-	if (!file.is_open()) {
-		throw HTTPException(404, path);
-	}
-
-	std::stringstream buffer;
-    buffer << file.rdbuf();
-	file.close();
-
-	return buffer.str();
 }
 
 bool HTTPServer::is_valid_http_message(string& message) {

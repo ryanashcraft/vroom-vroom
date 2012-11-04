@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 
-#include "vroom_vroom_server.h"
+#include "http_server.h"
 
 using namespace v8;
 
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  VroomVroomServer s(atoi(argv[1]));
+  HTTPServer s(atoi(argv[1]));
 
   while (true)
     s.handle();
