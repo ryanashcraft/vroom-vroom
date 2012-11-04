@@ -11,14 +11,6 @@
 using namespace v8;
 
 int main(int argc, char* argv[]) {
-  // std::ifstream t("test/example.js");
-
-  // if (t.is_open()) {
-  //   fprintf(stderr, "200\n");
-  // } else {
-  //   fprintf(stderr, "404\n");
-  // }
-
   if (argc != 2) {
     return -1;
   }

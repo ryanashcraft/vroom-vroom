@@ -18,6 +18,7 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 void HTTPServer::handle() {
 	Socket client = socket_.accept();
 	string reply = process(accept(client));
+	cout << reply << endl;
 	client.send(reply);
 	client.close();
 }
@@ -46,6 +47,7 @@ string HTTPServer::process(const string& message) {
 	std::stringstream trimmer;
 	trimmer << message;
 	trimmer >> path;
+
 	return file_to_string(path);
 }
 
@@ -76,6 +78,16 @@ bool HTTPServer::is_valid_http_message(string& message) {
 string HTTPServer::OK(const string& message) {
 	stringstream response;
 	response << "HTTP/1.0 200 OK" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+	response << "Content-Type: text/html" << endl;
+	response << "Content-Length: " << message.length() - 1 << endl;
+	response << message;
+	return response.str();
+}
+
+string HTTPServer::BadRequest(const string& message) {
+	stringstream response;
+	response << "HTTP/1.0 400 Bad Request" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Content-Type: text/html" << endl;
 	response << "Content-Length: " << message.length() << endl;

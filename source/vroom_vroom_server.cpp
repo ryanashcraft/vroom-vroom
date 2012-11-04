@@ -16,11 +16,23 @@ VroomVroomServer::VroomVroomServer(unsigned short port) : HTTPServer(port) {
 }
 
 string VroomVroomServer::process(const string& message) {
-	string path;
+	string type;
 	std::stringstream trimmer;
 	trimmer << message;
-	trimmer >> path;
-	return OK(interpret(path));
+	trimmer >> type;
+
+	if (type == "GET") {
+		string path;
+		trimmer << message;
+		trimmer >> path;
+
+		path.erase(0, 1);
+
+		return OK(interpret(path));
+	}
+
+	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
+	return BadRequest("");
 }
 
 string VroomVroomServer::interpret(const string& path) {
