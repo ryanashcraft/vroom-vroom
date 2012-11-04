@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  HTTPServer s(atoi(argv[1]));
+  VroomVroomServer s(atoi(argv[1]));
 
   while (true)
     s.handle();

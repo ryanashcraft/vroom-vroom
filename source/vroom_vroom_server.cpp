@@ -1,8 +1,11 @@
 
-#include <v8.h>
+#include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <streambuf>
+
+#include <v8.h>
 
 #include "vroom_vroom_server.h"
 
@@ -13,7 +16,11 @@ VroomVroomServer::VroomVroomServer(unsigned short port) : HTTPServer(port) {
 }
 
 string VroomVroomServer::process(const string& message) {
-	return interpret(message);
+	string path;
+	std::stringstream trimmer;
+	trimmer << message;
+	trimmer >> path;
+	return OK(interpret(path));
 }
 
 string VroomVroomServer::interpret(const string& path) {

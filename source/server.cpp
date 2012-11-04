@@ -14,5 +14,7 @@ Server::Server(unsigned short port) : port_(port) {
 		exit(-1);
 	}
 
+	cout << "Server started on port " << port << endl;
+
 	socket_.listen();
 }

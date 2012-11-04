@@ -5,13 +5,14 @@
 #include <string>
 
 #include "http_server.h"
+#include "date.h"
 
 using namespace std;
 
 #define BUFFER_SIZE 32
 
 HTTPServer::HTTPServer(unsigned short port) : Server(port) {
-	cout << "HTTPServer started" << endl;
+
 }
 
 void HTTPServer::handle() {
@@ -70,4 +71,14 @@ bool HTTPServer::is_valid_http_message(string& message) {
 	}
 
 	return false;
+}
+
+string HTTPServer::OK(const string& message) {
+	stringstream response;
+	response << "HTTP/1.0 200 OK" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+	response << "Content-Type: text/html" << endl;
+	response << "Content-Length: " << message.length() << endl;
+	response << message;
+	return response.str();
 }
