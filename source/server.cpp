@@ -18,3 +18,7 @@ Server::Server(unsigned short port) : port_(port) {
 
 	socket_.listen();
 }
+
+Server::~Server() {
+	socket_.close();
+}
