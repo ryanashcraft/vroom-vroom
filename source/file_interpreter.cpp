@@ -12,9 +12,11 @@ using namespace std;
 
 string get_extension_from_path(const string& path);
 
-static unordered_map<string, string> extension_to_mime_map({
+static unordered_map<string, string> binary_extension_to_mime_map({
 	{"png", "image/png"},
-	{"jpg", "image/jpg"}
+	{"jpg", "image/jpg"},
+	{"jpeg", "image/jpeg"},
+	{"gif", "image/gif"}
 });
 
 FileInterpreter::FileInterpreter(const string& path) : path_(path) {
@@ -26,8 +28,8 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 	
 	if (extension == "vv") {
 		return unique_ptr<FileInterpreter>(new VroomVroomInterpreter(path));
-	} else if (extension_to_mime_map.count(extension) > 0) {
-		return unique_ptr<FileInterpreter>(new BinaryInterpreter(path, extension_to_mime_map[extension]));
+	} else if (binary_extension_to_mime_map.count(extension) > 0) {
+		return unique_ptr<FileInterpreter>(new BinaryInterpreter(path, binary_extension_to_mime_map[extension]));
 	}
 
 	return unique_ptr<FileInterpreter>(new TextInterpreter(path));
