@@ -12,7 +12,7 @@
 				'title': 'Oh hai!',
 				'link': {
 					attr: [
-						{'src':'style.css'},
+						{'href':'style.css'},
 						{'rel':'stylesheet'}
 					],
 					single: true
@@ -31,13 +31,13 @@
 					attr: [
 						{'class':'modal'}
 					],
-					inner: 'hello world'
+					inner: include("test/example2.vv")
 				}
 			}
 		}
 	}
 
-	return json2xml(doc) + include("test/example2.vv");
+	return json2xml(doc);
 })();
 
 function json2xml(o) {
