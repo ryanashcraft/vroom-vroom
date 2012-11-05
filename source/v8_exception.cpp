@@ -15,6 +15,7 @@ const char* ToCString(const v8::String::Utf8Value& value) {
 }
 
 V8Exception::V8Exception(v8::TryCatch* try_catch, const string& path) {
+	// http://v8.googlecode.com/svn/trunk/samples/shell.cc
 	stringstream str;
 
 	v8::HandleScope handle_scope;
@@ -33,11 +34,15 @@ V8Exception::V8Exception(v8::TryCatch* try_catch, const string& path) {
 
 		// Print line of source code.
 		v8::String::Utf8Value sourceline(message->GetSourceLine());
-		const char* sourceline_string = ToCString(sourceline);
+		string sourceline_string = string(ToCString(sourceline));
 
-		str  << " <code>" << sourceline_string << "</code>" << endl;
+		cerr << "foo" << message->GetStartColumn() << message->GetEndColumn() << endl;
 
-		str << endl;
+		str  << "<code>";
+		str << sourceline_string.substr(0, message->GetStartColumn());
+		str << "<u>" << sourceline_string.substr(message->GetStartColumn(), message->GetEndColumn() - message->GetStartColumn()) << "</u>";
+		str << sourceline_string.substr(message->GetEndColumn());
+		str << "</code>" << endl;
 	}
 
 	message_ = str.str();
