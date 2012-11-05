@@ -19,10 +19,6 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 void HTTPServer::handle() {
 	Socket client = socket_.accept();
 	string reply = process(accept(client));
-
-	cout << "========================" << endl;
-	cout << reply << endl;
-
 	client.send(reply);
 	client.close();
 }
@@ -86,12 +82,20 @@ bool HTTPServer::is_valid_http_message(string& message) {
 }
 
 string HTTPServer::OK(const string& message, const string mime) {
+	// string endl = "\r\n";
 	stringstream response;
-	response << "HTTP/1.0 200 OK" << endl;
+	response << "HTTP/1.1 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: " << mime << endl;
+	response << "Accept-Ranges: bytes" << endl;
 	response << "Content-Length: " << message.length() - 1 << endl;
-	response << message;
+	response << "Connection: close" << endl;
+	response << "Content-Type: " << mime << endl;
+	response << message << endl;
+	// cout << message.substr(0, 128) << endl;
+	// cout << message.substr(message.length() - 128) << endl;
+
+	cout << response.str() << endl;
+
 	return response.str();
 }
 

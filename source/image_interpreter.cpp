@@ -4,7 +4,6 @@
 
 #include "image_interpreter.h"
 #include "http_exception.h"
-#include "base64.h"
 
 using namespace std;
 

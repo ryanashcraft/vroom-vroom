@@ -5,6 +5,7 @@
 
 #include "text_interpreter.h"
 #include "vroom_vroom_interpreter.h"
+#include "png_interpreter.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 	
 	if (extension == "vv") {
 		return unique_ptr<FileInterpreter>(new VroomVroomInterpreter(path));
+	} else if (extension == "png") {
+		return unique_ptr<FileInterpreter>(new PNGInterpreter(path));
 	}
 
 	return unique_ptr<FileInterpreter>(new TextInterpreter(path));
