@@ -89,8 +89,11 @@ string HTTPServer::OK(const string& message, const string mime) {
 	response << "Accept-Ranges: bytes" << endl;
 	response << "Content-Length: " << message.length() - 1 << endl;
 	response << "Connection: close" << endl;
-	response << "Content-Type: " << mime << endl;
+	response << "Content-Type: " << mime << endl << endl;
 	response << message << endl;
+
+	cerr << response.str() << endl;
+
 	return response.str();
 }
 

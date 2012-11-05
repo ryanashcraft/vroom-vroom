@@ -6,9 +6,12 @@
 
 #include "vroom_vroom_interpreter.h"
 #include "http_exception.h"
+#include "v8_exception.h"
 
 using namespace std;
 using namespace v8;
+
+string V8ExceptionToString(v8::TryCatch* handler);
 
 VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	
@@ -30,15 +33,18 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 		throw HTTPException(404, path);
 	}
 
-	Handle<Value> result(interpret_file(file));
-
-	// Convert the result to an ASCII string and print it.
-	// String::AsciiValue ascii(result);
+	Handle<Value> result;
+	try {
+		result = interpret_file(file, path);
+	} catch (V8Exception& e) {
+		// cerr << e.what() << endl;
+		result = String::New(e.what());
+	}
 
     return handle_scope.Close(result);
 }
 
-Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file) {
+Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string& path) {
 	using namespace v8;
 
 	// Create a stack-allocated handle scope.
@@ -75,11 +81,22 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file) {
 
 	file.close();
 
+	v8::TryCatch try_catch;
+
 	// Compile the source code.
 	Handle<Script> script = Script::Compile(source);
 
-	// Run the script to get the result.
-	Handle<Value> result = script->Run();
+	Handle<Value> result;
+	if (try_catch.HasCaught()) {
+		throw V8Exception(&try_catch, path);
+	} else {
+		// Run the script to get the result.
+		result = script->Run();
+
+		if (result.IsEmpty()) {
+			throw V8Exception(&try_catch, path);
+		}
+	}
 
 	// Dispose the persistent context.
 	context.Dispose();
@@ -94,10 +111,20 @@ string VroomVroomInterpreter::interpret() {
 		throw HTTPException(404, path_);
 	}
 
-	Handle<Value> result(interpret_file(file));
+	Handle<Value> result;
+	try {
+		result = interpret_file(file, path_);
+	} catch (V8Exception& e) {
+		cerr << e.what() << endl;
+		return string(e.what());
+	}
 
 	// Convert the result to an ASCII string and print it.
 	String::AsciiValue ascii(result);
+
+	if (*ascii == nullptr) {
+		return "";
+	}
 
 	return string(*ascii);
 }
