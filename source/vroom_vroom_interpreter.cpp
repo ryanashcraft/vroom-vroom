@@ -37,7 +37,6 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	try {
 		result = interpret_file(file, path);
 	} catch (V8Exception& e) {
-		// cerr << e.what() << endl;
 		result = String::New(e.what());
 	}
 

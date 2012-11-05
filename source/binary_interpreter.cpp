@@ -19,7 +19,6 @@ string BinaryInterpreter::interpret() {
 	}
 	
     std::string contents(std::istreambuf_iterator<char>(file), (std::istreambuf_iterator<char>()));
-    contents.insert(0, "\n");
 
 	return contents;
 }

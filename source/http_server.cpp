@@ -87,7 +87,7 @@ string HTTPServer::OK(const string& message, const string mime) {
 	response << "HTTP/1.1 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Accept-Ranges: bytes" << endl;
-	response << "Content-Length: " << message.length() - 1 << endl;
+	response << "Content-Length: " << message.length() << endl;
 	response << "Connection: close" << endl;
 	response << "Content-Type: " << mime << endl << endl;
 	response << message << endl;
