@@ -1,15 +1,21 @@
 
 #include <iostream>
+#include <unordered_map>
 
 #include "file_interpreter.h"
 
 #include "text_interpreter.h"
 #include "vroom_vroom_interpreter.h"
-#include "png_interpreter.h"
+#include "binary_interpreter.h"
 
 using namespace std;
 
- string get_extension_from_path(const string& path);
+string get_extension_from_path(const string& path);
+
+static unordered_map<string, string> extension_to_mime_map({
+	{"png", "image/png"},
+	{"jpg", "image/jpg"}
+});
 
 FileInterpreter::FileInterpreter(const string& path) : path_(path) {
 
@@ -20,8 +26,8 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 	
 	if (extension == "vv") {
 		return unique_ptr<FileInterpreter>(new VroomVroomInterpreter(path));
-	} else if (extension == "png") {
-		return unique_ptr<FileInterpreter>(new PNGInterpreter(path));
+	} else if (extension_to_mime_map.count(extension) > 0) {
+		return unique_ptr<FileInterpreter>(new BinaryInterpreter(path, extension_to_mime_map[extension]));
 	}
 
 	return unique_ptr<FileInterpreter>(new TextInterpreter(path));

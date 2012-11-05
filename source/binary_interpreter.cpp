@@ -2,16 +2,16 @@
 #include <vector>
 #include <sstream>
 
-#include "image_interpreter.h"
+#include "binary_interpreter.h"
 #include "http_exception.h"
 
 using namespace std;
 
-ImageInterpreter::ImageInterpreter(const string& path) : FileInterpreter(path) {
+BinaryInterpreter::BinaryInterpreter(const string& path, const string& mime) : FileInterpreter(path), mime_(mime) {
 	
 }
 
-string ImageInterpreter::interpret() {
+string BinaryInterpreter::interpret() {
 	ifstream file(path_, fstream::binary);
 
 	if (!file.is_open()) {
