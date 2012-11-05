@@ -13,8 +13,10 @@ protected:
 	std::string accept(Socket& client);	
 	virtual std::string process(const std::string& message);
 	std::string OK(const std::string& message, const std::string mime);
-	std::string BadRequest(const std::string& message);
+	std::string BadRequest(const std::string& message="");
 	std::string NotFound(const std::string& message="");
+	std::string InternalServerError(const std::string& message="");
+	std::string NotImplemented(const std::string& message="");
 private:
 	bool is_valid_http_message(std::string& message);
 };

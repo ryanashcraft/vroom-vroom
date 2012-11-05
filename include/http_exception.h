@@ -12,6 +12,9 @@ public:
 	const char* what() const throw() {
 		return "HTTPException";
 	}
+	const int code() const throw() {
+		return code_;
+	}
 private:
 	unsigned int code_;
 	std::string path_;

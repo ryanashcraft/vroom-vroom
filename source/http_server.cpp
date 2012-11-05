@@ -62,15 +62,16 @@ string HTTPServer::process(const string& message) {
 		try {
 			content = interpreter.get()->interpret();
 		} catch (const HTTPException& e) {
-			fprintf(stderr, "NOT FOUND: %s\n", path.c_str());
-			return NotFound();
+			switch (e.code()) {
+				case 404: return NotFound();
+				default:  return InternalServerError();
+			}
 		}
 
 		return OK(content, interpreter.get()->mime());
 	}
 
-	fprintf(stderr, "BAD REQUEST: %s\n", message.c_str());
-	return BadRequest("");
+	return NotImplemented();
 }
 
 bool HTTPServer::is_valid_http_message(string& message) {
@@ -82,7 +83,6 @@ bool HTTPServer::is_valid_http_message(string& message) {
 }
 
 string HTTPServer::OK(const string& message, const string mime) {
-	// string endl = "\r\n";
 	stringstream response;
 	response << "HTTP/1.1 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
@@ -91,11 +91,6 @@ string HTTPServer::OK(const string& message, const string mime) {
 	response << "Connection: close" << endl;
 	response << "Content-Type: " << mime << endl;
 	response << message << endl;
-	// cout << message.substr(0, 128) << endl;
-	// cout << message.substr(message.length() - 128) << endl;
-
-	cout << response.str() << endl;
-
 	return response.str();
 }
 
@@ -112,6 +107,26 @@ string HTTPServer::BadRequest(const string& message) {
 string HTTPServer::NotFound(const string& message) {
 	stringstream response;
 	response << "HTTP/1.0 404 Not Found" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+	response << "Content-Type: text/html" << endl;
+	response << "Content-Length: " << message.length() << endl;
+	response << message;
+	return response.str();
+}
+
+string HTTPServer::InternalServerError(const string& message) {
+	stringstream response;
+	response << "HTTP/1.0 500 Internal Server Error" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+	response << "Content-Type: text/html" << endl;
+	response << "Content-Length: " << message.length() << endl;
+	response << message;
+	return response.str();
+}
+
+string HTTPServer::NotImplemented(const string& message) {
+	stringstream response;
+	response << "HTTP/1.0 502 Not Implemented" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Content-Type: text/html" << endl;
 	response << "Content-Length: " << message.length() << endl;
