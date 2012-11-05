@@ -7,7 +7,7 @@
 
 using namespace std;
 
-BinaryInterpreter::BinaryInterpreter(const string& path, const string& mime) : FileInterpreter(path), mime_(mime) {
+BinaryInterpreter::BinaryInterpreter(const string& path, const string& mime) : FileInterpreter(path, mime) {
 	
 }
 

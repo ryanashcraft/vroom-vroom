@@ -8,12 +8,15 @@
 
 class FileInterpreter {
 public:
-	explicit FileInterpreter(const std::string& path);
+	explicit FileInterpreter(const std::string& path, const std::string& mime);
 	static std::unique_ptr<FileInterpreter> file_interpreter_for_path(const std::string& path);
-	virtual std::string mime() = 0;
+	virtual std::string mime() {
+		return mime_;
+	}
 	virtual std::string interpret() = 0;
 protected:
 	const std::string path_;
+	const std::string mime_;
 };
 
 #endif

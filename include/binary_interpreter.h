@@ -10,12 +10,7 @@
 class BinaryInterpreter : public FileInterpreter {
 public:
 	explicit BinaryInterpreter(const std::string& path, const std::string& mime);
-	std::string mime() {
-		return mime_;
-	}
 	std::string interpret();
-private:
-	std::string mime_;
 };
 
 #endif

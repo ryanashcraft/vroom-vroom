@@ -6,7 +6,7 @@
 
 using namespace std;
 
-TextInterpreter::TextInterpreter(const string& path) : FileInterpreter(path) {
+TextInterpreter::TextInterpreter(const string& path, const string& mime) : FileInterpreter(path, mime) {
 	
 }
 

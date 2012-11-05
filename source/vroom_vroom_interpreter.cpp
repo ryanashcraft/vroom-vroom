@@ -13,7 +13,7 @@
 using namespace std;
 using namespace v8;
 
-VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path) {
+VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	
 }
 
