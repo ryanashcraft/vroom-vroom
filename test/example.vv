@@ -37,7 +37,7 @@
 		}
 	}
 
-	return json2xml(doc);
+	return json2xml(doc) + require("test/example2.vv");
 })();
 
 function json2xml(o) {

@@ -34,6 +34,7 @@ void listen_to_signal(int signal, void(*handler)(int)) {
 }
 
 int main(int argc, char* argv[]) {
+	using namespace v8;
 	unsigned short port;
 
 	if (argc == 2) {

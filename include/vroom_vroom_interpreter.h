@@ -2,6 +2,8 @@
 #ifndef VROOM_VROOM_INTERPRETER_H_
 #define VROOM_VROOM_INTERPRETER_H_
 
+#include <v8.h>
+
 #include <string>
 #include <fstream>
 
@@ -14,6 +16,8 @@ public:
 		return "text/html";
 	}
 	std::string interpret();
+	static v8::Handle<v8::Value> Require(const v8::Arguments& args);
+	static v8::Handle<v8::Value> interpret_file(std::ifstream& file);
 };
 
 #endif
