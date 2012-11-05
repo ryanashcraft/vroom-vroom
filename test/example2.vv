@@ -1,4 +1,10 @@
 
 (function() {
-	return "Ryan Ashcraft";
+	var name = "Ryan Ashcraft";
+
+	for (var i = 0; i < 3; i++) {
+		name += " " + name;
+	}
+
+	return name;
 })();

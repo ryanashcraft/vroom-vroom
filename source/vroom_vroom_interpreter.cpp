@@ -17,7 +17,7 @@ VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpret
 	
 }
 
-Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
+Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 	using namespace v8;
 
 	// We will be creating temporary handles so we use a handle scope.
@@ -61,10 +61,10 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	 
 	//create function template for our constructor
 	//it will call the constructPoint function
-	v8::Handle<v8::FunctionTemplate> function = v8::FunctionTemplate::New(VroomVroomInterpreter::Require);
+	v8::Handle<v8::FunctionTemplate> function = v8::FunctionTemplate::New(VroomVroomInterpreter::Include);
 	 
 	//set the function in the global scope -- that is, set "Point" to the constructor
-	global->Set(v8::String::New("require"), function->GetFunction());
+	global->Set(v8::String::New("include"), function->GetFunction());
 
 	std::string str;
 
