@@ -24,7 +24,8 @@ static unordered_map<string, string> text_extension_to_mime_map({
     {"html", "text/html"},
     {"xml", "text/xml"},
     {"txt", "text/plain"},
-    {"css", "text/css"} 
+    {"css", "text/css"},
+    {"js", "application/javascript"}
 });
 
 FileInterpreter::FileInterpreter(const string& path, const string& mime) : path_(path), mime_(mime) {
