@@ -7,6 +7,7 @@
 #include "http_server.h"
 #include "date.h"
 #include "file_interpreter.h"
+#include "path_resolution.h"
 
 using namespace std;
 
@@ -53,8 +54,7 @@ string HTTPServer::process(const string& message) {
 		trimmer << message;
 		trimmer >> path;
 
-		// remove absolute URL forward slash
-		path.erase(0, 1);
+		path = vv::resolve_path(path, "/");
 
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
 
