@@ -26,8 +26,8 @@ inline string get_exe_directory() {
 inline string get_directory_from_path(const string& path) {
 	size_t extension_index = path.find_last_of("/");
 
-	if (extension_index == string::npos || extension_index == path.length() - 1) {
-		return "";
+	if (extension_index == string::npos) {
+		return path;
 	}
 
 	return path.substr(0, extension_index);
