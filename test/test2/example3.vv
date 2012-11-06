@@ -2,8 +2,8 @@
 (function() {
 	var exports = {};
 	
-	exports.one = include("test3/example4.vv");
-	exports.two = include("test4/example5.vv");
+	exports.one = require("test3/example4.vv");
+	exports.two = require("test4/example5.vv");
 
 	return exports;
 })();

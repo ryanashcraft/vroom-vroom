@@ -16,7 +16,7 @@ public:
 		return "text/html";
 	}
 	std::string interpret();
-	static v8::Handle<v8::Value> Include(const v8::Arguments& args);
+	static v8::Handle<v8::Value> Require(const v8::Arguments& args);
 	static v8::Handle<v8::Value> interpret_file(std::ifstream& file, const std::string& path);
 };
 

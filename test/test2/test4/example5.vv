@@ -2,7 +2,7 @@
 (function() {
 	var exports = {};
 
-	var example = include("../../example2.vv");
+	var example = require("../../example2.vv");
 	exports.secret = "<br>" + example.user.name + CURRENT_DIRECTORY;
 
 	return exports;
