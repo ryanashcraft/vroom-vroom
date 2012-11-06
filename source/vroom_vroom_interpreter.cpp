@@ -27,7 +27,8 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 
 	String::AsciiValue ascii_path(args[0]);
 	const std::string path(*ascii_path);
-    ifstream file(path);
+
+	ifstream file(path);
 
 	if (!file.is_open()) {
 		throw HTTPException(404, path);
@@ -37,7 +38,8 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 	try {
 		result = interpret_file(file, path);
 	} catch (V8Exception& e) {
-		result = String::New(e.what());
+		cerr << e.what() << endl;
+		return handle_scope.Close(String::New(e.what()));
 	}
 
     return handle_scope.Close(result);
@@ -118,12 +120,11 @@ string VroomVroomInterpreter::interpret() {
 		return string(e.what());
 	}
 
-	// Convert the result to an ASCII string and print it.
-	String::AsciiValue ascii(result);
+	String::Utf8Value str(result);
 
-	if (*ascii == nullptr) {
+	if (*str == nullptr) {
 		return "";
 	}
 
-	return string(*ascii);
+	return string(*str);
 }

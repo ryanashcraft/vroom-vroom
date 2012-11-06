@@ -31,7 +31,16 @@
 					attr: [
 						{'class':'modal'}
 					],
-					inner: include("test/example2.vv")
+					inner: function() {
+						var included = include("test/example2.vv");
+						var str = "";
+						for (var m in included.user) {
+							str += included.user[m] + "<br>";
+						}
+						str += included.private_func + "<br>";
+						str += included.reverse_string("foo fighters");
+						return str;
+					}
 				}
 			}
 		}
@@ -77,9 +86,13 @@ function json2xml(o) {
 
 			if (hasChild && !single) {
 				for (var m in v) {
-					if (m == "inner")
-						xml += v[m];
-					else if (m == "#text")
+					if (m == "inner") {
+						if (typeof(v[m]) == "function") {
+							xml += v[m]();
+						} else {
+							xml += v[m];
+						}
+					} else if (m == "#text")
 						xml += v[m];
 					else if (m == "#cdata")
 						xml += "<![CDATA[" + v[m] + "]]>";

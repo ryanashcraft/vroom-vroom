@@ -1,10 +1,28 @@
 
 (function() {
-	var name = "Ryan Ashcraft";
+	var exports = {};
 
-	for (var i = 0; i < 3; i++) {
-		name += " " + name;
+	exports.user = {
+		name: "Ryan Ashcraft",
+		age: 20,
+		dob: "February 21, 1992"
+	};
+
+	var private_func = function() {
+		return "oh hai";
 	}
 
-	return name;
+	exports.reverse_string = function(str) {
+		var rev = function(b, s) {
+			if (s.length == 0) {
+				return b;
+			}
+
+			return b + rev(s.substr(s.length - 1), s.substr(0, s.length - 1));
+		}
+
+		return private_func() + " " + rev(str.substr(str.length - 1), str.substr(0, str.length - 1));
+	}
+
+	return exports;
 })();
