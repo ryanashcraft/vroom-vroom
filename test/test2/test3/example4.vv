@@ -1,0 +1,8 @@
+
+(function() {
+	var exports = {};
+
+	exports.secret = "how did you find me?";
+
+	return exports;
+})();

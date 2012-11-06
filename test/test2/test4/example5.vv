@@ -1,0 +1,8 @@
+
+(function() {
+	var exports = {};
+
+	exports.secret = "boo!";
+
+	return exports;
+})();

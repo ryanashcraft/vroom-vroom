@@ -9,7 +9,14 @@
 	};
 
 	var private_func = function() {
-		return "oh hai";
+		var secrets = include("test2/example3.vv");
+		var str = "";
+
+		for (var m in secrets) {
+			str += secrets[m].secret + " ";
+		}
+
+		return str;
 	}
 
 	exports.reverse_string = function(str) {

@@ -54,8 +54,8 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 	String::AsciiValue ascii_path(args[0]);
 	std::string path(*ascii_path);
 
+	Handle<Value> cd = v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY"));
 	if (path[0] != '/') {
-		Handle<Value> cd = v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY"));
 		String::Utf8Value cd_str(cd);
 
 		path = string(*cd_str) + "/" + path;
@@ -73,9 +73,14 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 	try {
 		result = interpret_file(file, path);
 	} catch (V8Exception& e) {
-		cerr << e.what() << endl;
+		// reset current directory - necessary?
+		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+
 		return handle_scope.Close(String::New(e.what()));
 	}
+
+	// reset current directory - necessary?
+	v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
     return handle_scope.Close(result);
 }
