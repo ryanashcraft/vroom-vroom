@@ -32,13 +32,14 @@
 						{'class':'modal'}
 					],
 					inner: function() {
-						var included = include("test/example2.vv");
+						var included = include("/test/example2.vv");
 						var str = "";
 						for (var m in included.user) {
 							str += included.user[m] + "<br>";
 						}
 						str += included.private_func + "<br>";
-						str += included.reverse_string("foo fighters");
+						str += included.reverse_string("foo fighters") + "<br>";
+						str += CURRENT_DIRECTORY;
 						return str;
 					}
 				}

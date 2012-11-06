@@ -1,4 +1,6 @@
 
+#include <stdio.h>  /* defines FILENAME_MAX */
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -11,7 +13,31 @@
 using namespace std;
 using namespace v8;
 
+#ifdef WINDOWS
+    #include <direct.h>
+    #define GetCurrentDir _getcwd
+#else
+    #include <unistd.h>
+    #define GetCurrentDir getcwd
+ #endif
+
+inline string get_exe_directory() {
+	char cCurrentPath[FILENAME_MAX];
+	string dir(GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)));
+	return string(dir).substr(0, dir.find_last_of('\\'));
+}
+
 string V8ExceptionToString(v8::TryCatch* handler);
+
+inline string get_directory_from_path(const string& path) {
+	size_t extension_index = path.find_last_of("/");
+
+	if (extension_index == string::npos || extension_index == path.length() - 1) {
+		return "";
+	}
+
+	return path.substr(0, extension_index);
+}
 
 VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	
@@ -26,12 +52,21 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
     Handle<Object> object = Handle<Object>::Cast(args[0]);
 
 	String::AsciiValue ascii_path(args[0]);
-	const std::string path(*ascii_path);
+	std::string path(*ascii_path);
+
+	if (path[0] != '/') {
+		Handle<Value> cd = v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY"));
+		String::Utf8Value cd_str(cd);
+
+		path = string(*cd_str) + "/" + path;
+	} else {
+		path = get_exe_directory() + path;
+	}
 
 	ifstream file(path);
 
 	if (!file.is_open()) {
-		throw HTTPException(404, path);
+		return handle_scope.Close(String::New(""));
 	}
 
 	Handle<Value> result;
@@ -67,6 +102,8 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	 
 	//set the function in the global scope -- that is, set "Point" to the constructor
 	global->Set(v8::String::New("include"), function->GetFunction());
+
+	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(get_directory_from_path(path).c_str()));
 
 	std::string str;
 
