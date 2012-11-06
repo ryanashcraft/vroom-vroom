@@ -28,7 +28,7 @@
 			return b + rev(s.substr(s.length - 1), s.substr(0, s.length - 1));
 		}
 
-		return private_func() + " " + rev(str.substr(str.length - 1), str.substr(0, str.length - 1));
+		return CURRENT_DIRECTORY + private_func() + " " + rev(str.substr(str.length - 1), str.substr(0, str.length - 1));
 	}
 
 	return exports;

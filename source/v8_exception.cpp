@@ -36,8 +36,6 @@ V8Exception::V8Exception(v8::TryCatch* try_catch, const string& path) {
 		v8::String::Utf8Value sourceline(message->GetSourceLine());
 		string sourceline_string = string(ToCString(sourceline));
 
-		cerr << "foo" << message->GetStartColumn() << message->GetEndColumn() << endl;
-
 		str  << "<code>";
 		str << sourceline_string.substr(0, message->GetStartColumn());
 		str << "<u>" << sourceline_string.substr(message->GetStartColumn(), message->GetEndColumn() - message->GetStartColumn()) << "</u>";

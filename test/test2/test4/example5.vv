@@ -2,7 +2,7 @@
 (function() {
 	var exports = {};
 
-	exports.secret = "boo!";
+	exports.secret = "boo!" + CURRENT_DIRECTORY;
 
 	return exports;
 })();

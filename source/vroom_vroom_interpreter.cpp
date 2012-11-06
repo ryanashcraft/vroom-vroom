@@ -12,6 +12,10 @@
 using namespace std;
 using namespace v8;
 
+string v8_string_to_string(const v8::String::Utf8Value& value) {
+  return *value ? string(*value) : "<string conversion failed>";
+}
+
 VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	
 }
@@ -24,27 +28,22 @@ Handle<v8::Value> VroomVroomInterpreter::Include(const v8::Arguments& args) {
 
     Handle<Object> object = Handle<Object>::Cast(args[0]);
 
-	String::AsciiValue ascii_path(args[0]);
-	std::string path(*ascii_path);
+	String::Utf8Value utfpath(args[0]);
+	string path(v8_string_to_string(utfpath));
 
-	Handle<Value> cd = v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY"));
-	if (path[0] != '/') {
-		String::Utf8Value cd_str(cd);
+	Handle<String> cd = Handle<String>::Cast(v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY")));
+	string current_directory(v8_string_to_string(String::Utf8Value(cd)));
+	string resolved_path = vv::resolve_path(path, current_directory);
 
-		path = string(*cd_str) + "/" + path;
-	} else {
-		path = vv::get_exe_directory() + path;
-	}
-
-	ifstream file(path);
+	ifstream file(resolved_path);
 
 	if (!file.is_open()) {
-		return handle_scope.Close(String::New(""));
+		return handle_scope.Close(String::New(string("failed to include " + resolved_path).c_str()));
 	}
 
 	Handle<Value> result;
 	try {
-		result = interpret_file(file, path);
+		result = interpret_file(file, resolved_path);
 	} catch (V8Exception& e) {
 		// reset current directory - necessary?
 		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
@@ -81,7 +80,9 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	//set the function in the global scope -- that is, set "Point" to the constructor
 	global->Set(v8::String::New("include"), function->GetFunction());
 
-	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(vv::get_directory_from_path(path).c_str()));
+	string translated_cd(vv::get_directory_from_path(vv::translate_path(path)));
+
+	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(translated_cd.c_str()));
 
 	std::string str;
 

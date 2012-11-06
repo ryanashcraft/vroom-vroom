@@ -2,7 +2,7 @@
 (function() {
 	var exports = {};
 
-	exports.secret = "how did you find me?";
+	exports.secret = "how did you find me?" + CURRENT_DIRECTORY;
 
 	return exports;
 })();
