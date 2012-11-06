@@ -1,4 +1,6 @@
 
+#include <sys/stat.h>
+
 #include "path_resolution.h"
 
 #ifdef WINDOWS
@@ -11,6 +13,17 @@
 
 namespace vv {
 	using namespace std;
+
+	// http://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing
+	bool file_exists(const std::string& filename) {
+	    struct stat buf;
+
+	    if (stat(filename.c_str(), &buf) != -1) {
+	        return true;
+	    }
+
+	    return false;
+	}
 
 	string get_public_directory() {
 		char cCurrentPath[FILENAME_MAX];
@@ -57,7 +70,7 @@ namespace vv {
 		}
 	}
 
-	string translate_path(string path) {
+	string system_path_to_public_path(string path) {
 		string pubdir = get_public_directory();
 
 		if (path.length() >= pubdir.length() && path.substr(0, pubdir.length()) == pubdir) {

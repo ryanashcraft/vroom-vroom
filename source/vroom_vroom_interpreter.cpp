@@ -35,10 +35,20 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	string current_directory(v8_string_to_string(String::Utf8Value(cd)));
 	string resolved_path = vv::resolve_path(path, current_directory);
 
+	if (resolved_path[resolved_path.length() - 1] == '/') {
+		// reset current directory - necessary?
+		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+
+		return handle_scope.Close(String::New(""));
+	}
+
 	ifstream file(resolved_path);
 
 	if (!file.is_open()) {
-		return handle_scope.Close(String::New(string("failed to include " + resolved_path).c_str()));
+		// reset current directory - necessary?
+		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+
+		return handle_scope.Close(String::New(""));
 	}
 
 	Handle<Value> result;
@@ -48,7 +58,7 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 		// reset current directory - necessary?
 		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
-		return handle_scope.Close(String::New(e.what()));
+		return handle_scope.Close(String::New(""));
 	}
 
 	// reset current directory - necessary?
@@ -80,9 +90,9 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	//set the function in the global scope -- that is, set "Point" to the constructor
 	global->Set(v8::String::New("require"), function->GetFunction());
 
-	string translated_cd(vv::get_directory_from_path(vv::translate_path(path)));
+	string public_cd(vv::get_directory_from_path(vv::system_path_to_public_path(path)));
 
-	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(translated_cd.c_str()));
+	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(public_cd.c_str()));
 
 	std::string str;
 

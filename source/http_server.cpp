@@ -56,6 +56,14 @@ string HTTPServer::process(const string& message) {
 
 		path = vv::resolve_path(path, "/");
 
+		if (path[path.length() - 1] == '/') {
+			if (vv::file_exists(path + "index.vv")) {
+				path += "index.vv";
+			} else if (vv::file_exists(path + "index.html")) {
+				path += "index.html";
+			}
+		}
+
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
 
 		string content = "";

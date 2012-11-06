@@ -9,7 +9,7 @@
 	};
 
 	var private_func = function() {
-		var secrets = require("test2/example3.vv");
+		var secrets = require("test2/index.vv");
 		var str = "";
 
 		for (var m in secrets) {
