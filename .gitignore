@@ -3,3 +3,4 @@ vroomvroom
 *.o
 
 *.dSYM
+.make-*
