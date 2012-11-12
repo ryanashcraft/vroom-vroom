@@ -73,15 +73,8 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	// Create a stack-allocated handle scope.
 	HandleScope handle_scope;
 
-	// Create a new context.
-	Persistent<Context> context = Context::New();
-
-	// Enter the created context for compiling and
-	// running the hello world script. 
-	Context::Scope context_scope(context);
-
 	//Get the context's global scope (that's where we'll put the constructor)
-	v8::Handle<v8::Object> global = context->Global();
+	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
 	 
 	//create function template for our constructor
 	//it will call the constructPoint function
@@ -113,7 +106,7 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 	// Compile the source code.
 	Handle<Script> script = Script::Compile(source);
 
-	Handle<Value> result;
+	Local<Value> result;
 	if (try_catch.HasCaught()) {
 		throw V8Exception(&try_catch, path);
 	} else {
@@ -125,10 +118,7 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 		}
 	}
 
-	// Dispose the persistent context.
-	context.Dispose();
-
-	return result;
+	return handle_scope.Close(result);
 }
 
 string VroomVroomInterpreter::interpret() {
@@ -138,6 +128,12 @@ string VroomVroomInterpreter::interpret() {
 		throw HTTPException(404, path_);
 	}
 
+	HandleScope handle_scope;
+
+	// Create a new context.
+	Persistent<Context> context = Context::New();
+	Context::Scope context_scope(context);
+
 	Handle<Value> result;
 	try {
 		result = interpret_file(file, path_);
@@ -146,11 +142,14 @@ string VroomVroomInterpreter::interpret() {
 		return string(e.what());
 	}
 
-	String::Utf8Value str(result);
+	Local<String> str(result->ToString());
+
+	// Dispose the persistent context.
+	context.Dispose();
 
 	if (*str == nullptr) {
 		return "";
 	}
 
-	return string(*str);
+	return string(*String::Utf8Value(str));
 }

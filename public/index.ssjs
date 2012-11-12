@@ -32,7 +32,7 @@
 						{'class':'modal'}
 					],
 					inner: function() {
-						var included = require("/example2.vv");
+						var included = require("/example2.ssjs");
 						var str = "";
 						for (var m in included.user) {
 							str += included.user[m] + "<br>";

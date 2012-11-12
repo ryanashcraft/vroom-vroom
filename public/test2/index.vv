@@ -1,9 +1,0 @@
-
-(function() {
-	var exports = {};
-	
-	exports.one = require("test3/example4.vv");
-	exports.two = require("test4/example5.vv");
-
-	return exports;
-})();

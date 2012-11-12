@@ -41,6 +41,16 @@ namespace vv {
 		return path.substr(0, extension_index) + "/";
 	}
 
+	string get_extension_from_path(string path) {
+		size_t extension_index = path.find_last_of(".");
+
+		if (extension_index == string::npos || extension_index == path.length() - 1) {
+			return "";
+		}
+
+		return path.substr(extension_index + 1);
+	}
+
 	string resolve_path(string path, string cd) {
 		string pubdir = get_public_directory();
 
