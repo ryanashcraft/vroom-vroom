@@ -1,5 +1,7 @@
-v8dir=~/Apps/Libraries/V8/
-v8incs=/Users/ryanashcraft/Apps/Libraries/V8/include
+# Makefile based off of example from http://content.gpwiki.org/index.php/Makefile
+
+V8HOME=~/Apps/Libraries/V8
+V8INCS=/Users/ryanashcraft/Apps/Libraries/V8/include
 
 # Specify the main target
 TARGET = vroomvroom
@@ -8,23 +10,26 @@ TYPE = debug
 # Which directories contain source files
 DIRS = source
 # Which directories contain header files
-INCS = include
+INCS = include 
 # Which libraries are linked
 LIBS = pthread
 
 # The next blocks change some variables depending on the build type
 ifeq ($(TYPE),debug)
-v8=$(v8dir)/out/x64.debug/libv8_base.a
-v8+=$(v8dir)/out/x64.debug/libv8_snapshot.a
-DLIBS = v8
-LDPARAM = 
-CCPARAM = -std=c++11 -stdlib=libc++ -Wall -g -I$(INCS)
+V8=$(V8HOME)/out/x64.debug/libv8_base.a
+V8+=$(V8HOME)/out/x64.debug/libv8_snapshot.a
+SLIBS += $(V8)
+LDPARAM = -stdlib=libc++
+CCPARAM = -std=c++11 -stdlib=libc++ -Wall -g -I$(INCS) -I$(V8INCS)
 MACROS =
 endif
 
 ifeq ($(TYPE), release)
-LDPARAM = -s
-CCPARAM = -std=c++11 -stdlib=libc++ -Wall -O2 -I$(INCS)
+V8=$(V8HOME)/out/x64.debug/libv8_base.a
+V8+=$(V8HOME)/out/x64.debug/libv8_snapshot.a
+SLIBS += $(V8)
+LDPARAM = -s -stdlib=libc++
+CCPARAM = -std=c++11 -Wall -O2 -I$(INCS) -I$(V8INCS)
 MACROS = NDEBUG
 endif
 
@@ -55,7 +60,7 @@ DFILES := $(addprefix $(STORE)/,$(SOURCE:.cpp=.d))
 # it to the standard output.
 $(TARGET): dirs $(OBJECTS)
 		@echo Linking $(TARGET).
-		@$(C++) -o $(TARGET) $(OBJECTS) $(LDPARAM) $(foreach LIBRARY, \
+		@$(C++) -o $(TARGET) $(OBJECTS) $(SLIBS) $(LDPARAM) $(foreach LIBRARY, \
 			$(LIBS),-l$(LIBRARY)) $(foreach LIB,$(LIBPATH),-L$(LIB))
 
 # Rule for creating object file and .d file, the sed magic is to add
@@ -89,6 +94,9 @@ dirs:
 		 then mkdir $(STORE)/$(DIR); fi; )
 		@-$(foreach DIR,$(INCS), if [ ! -e $(STORE)/$(DIR) ]; \
 		 then mkdir $(STORE)/$(DIR); fi; )
+
+run: $(TARGET)
+		./$(TARGET)
 
 # Includes the .d files so it knows the exact dependencies for every
 # source.
