@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define BUFFER_SIZE 32
+#define BUFFER_SIZE 128
 
 HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 
@@ -31,12 +31,12 @@ string HTTPServer::accept(Socket& client) {
 
 	string message = "";
 	received_size = client.receive(BUFFER_SIZE, buffer);
-    message.append(buffer);
+    message.append(buffer, received_size);
 
     while (!is_valid_http_message(message) && received_size > 0) {
 	    memset(buffer, 0, BUFFER_SIZE);
 		received_size = client.receive(BUFFER_SIZE, buffer);
-	    message.append(buffer);
+	    message.append(buffer, received_size);
     }
 
     return message;
