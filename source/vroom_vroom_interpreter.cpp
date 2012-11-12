@@ -122,11 +122,11 @@ string VroomVroomInterpreter::interpret() {
 	Context::Scope context_scope(context);
 	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
 
-	Local<Array> post_array = v8::Array::New(post_data_.size());
-	for (int i = 0; i < post_data_.size(); ++i) {
-		post_array->Set(v8::Number::New(i), v8::String::New(post_data_[i].c_str()));
+	Local<Object> post_object = v8::Object::New();
+	for (unordered_map<string, string>::iterator iterator = post_data_.begin(); iterator != post_data_.end(); ++iterator) {
+		post_object->Set(v8::String::New(iterator->first.c_str()), v8::String::New(iterator->second.c_str()));
 	}
-	global->Set(v8::String::New("_POST"), post_array);
+	global->Set(v8::String::New("_POST"), post_object);
 
 	Handle<Value> result;
 	try {

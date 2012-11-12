@@ -41,7 +41,8 @@
 						str += included.reverse_string("foo fighters") + "<br>";
 						str += CURRENT_DIRECTORY + "<br>";
 
-						str += _POST[0];
+						str += _POST.filename + "<br>";
+						str += _POST.greeting + "<br>";
 
 						return str;
 					}

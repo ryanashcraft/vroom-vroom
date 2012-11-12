@@ -57,13 +57,13 @@ bool HTTPServer::is_valid_http_message(string& message) {
 		content_length = ::atoi(message.substr(matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so).c_str());
 	}
 
-	size_t message_begin = message.find("\r\n\r\n");
+	size_t message_start = message.find("\r\n\r\n");
 
-	if (message_begin == string::npos) {
+	if (message_start == string::npos) {
 		return false;
 	}
 
-	if (message.substr(message_begin).length() - 4 == content_length) {
+	if (message.substr(message_start).length() - 4 == content_length) {
 		return true;
 	}
 
@@ -117,15 +117,64 @@ string HTTPServer::process(const string& message) {
 	return NotImplemented();
 }
 
-vector<string> HTTPServer::parse_post_data(const string& message) {
-	vector<string> post_data;
+unordered_map<string, string> HTTPServer::parse_post_data(const string& message) {
+	unordered_map<string, string> post_data;
 
 	size_t message_start = message.find("\r\n\r\n");
 	if (message_start != string::npos) {
-	 	post_data.push_back(message.substr(message_start + 4));
+		string content(message.substr(message_start + 4));
+
+		stringstream ss(content);
+		do {
+			string lvalue, rvalue;
+			
+			if (!getline(ss, lvalue, '=')) {
+				break;
+			}
+
+			if (!getline(ss, rvalue, '&')) {
+				break;
+			}
+
+		 	post_data[lvalue] = rvalue;
+		} while (ss);
 	}
 
 	return post_data;
+}
+
+// http://dlib.net/dlib/server/server_http_1.h.html
+unsigned char HTTPServer::from_hex (unsigned char ch) const {
+	if (ch <= '9' && ch >= '0')
+	    ch -= '0';
+	else if (ch <= 'f' && ch >= 'a')
+	    ch -= 'a' - 10;
+	else if (ch <= 'F' && ch >= 'A')
+	    ch -= 'A' - 10;
+	else 
+	    ch = 0;
+
+	return ch;
+}
+
+const string HTTPServer::url_decode(const string& str) const {
+	string result;
+	string::size_type i;
+	for (i = 0; i < str.size(); ++i) {
+		if (str[i] == '+') {
+			result += ' ';
+		} else if (str[i] == '%' && str.size() > i+2) {
+			const unsigned char ch1 = from_hex(str[i+1]);
+			const unsigned char ch2 = from_hex(str[i+2]);
+			const unsigned char ch = (ch1 << 4) | ch2;
+			result += ch;
+			i += 2;
+	    } else {
+			result += str[i];
+		}
+	}
+
+	return result;
 }
 
 string HTTPServer::OK(const string& message, const string mime, bool no_body) {
