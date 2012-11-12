@@ -1,3 +1,5 @@
 vroomvroom
 *.out
 *.o
+
+*.dSYM
