@@ -44,3 +44,7 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 
 	return unique_ptr<FileInterpreter>(new TextInterpreter(path));
 }
+
+void FileInterpreter::set_post_data(vector<string>&& post_data) {
+	post_data_ = move(post_data);
+}

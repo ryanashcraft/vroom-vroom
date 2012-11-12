@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <regex.h>
+#include <cstdlib>
 
 #include "http_server.h"
 #include "date.h"
@@ -42,14 +44,39 @@ string HTTPServer::accept(Socket& client) {
     return message;
 }
 
+bool HTTPServer::is_valid_http_message(string& message) {
+	int content_length = 0;
+
+	regmatch_t matches[2];
+	regex_t content_length_regex;
+	::regcomp(&content_length_regex, "Content-Length:[ \t]*([0-9]+)", REG_EXTENDED);
+	int regexec_retval = ::regexec(&content_length_regex, message.c_str(), 2, matches, 0);
+	::regfree(&content_length_regex);
+
+	if (regexec_retval == 0 && matches[1].rm_so >= 0 && matches[1].rm_eo < message.length()) {
+		content_length = ::atoi(message.substr(matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so).c_str());
+	}
+
+	size_t message_begin = message.find("\r\n\r\n");
+
+	if (message_begin == string::npos) {
+		return false;
+	}
+
+	if (message.substr(message_begin).length() - 4 == content_length) {
+		return true;
+	}
+
+	return false;
+}
 
 string HTTPServer::process(const string& message) {
 	string type;
-	std::stringstream trimmer;
+	stringstream trimmer;
 	trimmer << message;
 	trimmer >> type;
 
-	if (type == "GET") {
+	if (type == "HEAD" || type == "GET" || type == "POST") {
 		string path;
 		trimmer << message;
 		trimmer >> path;
@@ -64,7 +91,15 @@ string HTTPServer::process(const string& message) {
 			}
 		}
 
+		if (!vv::file_exists(path)) {
+			return NotFound();
+		}
+
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
+
+		if (type == "POST") {
+			interpreter.get()->set_post_data(parse_post_data(message));
+		}
 
 		string content = "";
 		try {
@@ -76,21 +111,24 @@ string HTTPServer::process(const string& message) {
 			}
 		}
 
-		return OK(content, interpreter.get()->mime());
+		return OK(content, interpreter.get()->mime(), (type == "HEAD"));
 	}
 
 	return NotImplemented();
 }
 
-bool HTTPServer::is_valid_http_message(string& message) {
-	if (message[message.length() - 1] == '\n') {
-		return true;
+vector<string> HTTPServer::parse_post_data(const string& message) {
+	vector<string> post_data;
+
+	size_t message_start = message.find("\r\n\r\n");
+	if (message_start != string::npos) {
+	 	post_data.push_back(message.substr(message_start + 4));
 	}
 
-	return false;
+	return post_data;
 }
 
-string HTTPServer::OK(const string& message, const string mime) {
+string HTTPServer::OK(const string& message, const string mime, bool no_body) {
 	stringstream response;
 	response << "HTTP/1.1 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
@@ -98,7 +136,9 @@ string HTTPServer::OK(const string& message, const string mime) {
 	response << "Content-Length: " << message.length() << endl;
 	response << "Connection: close" << endl;
 	response << "Content-Type: " << mime << endl << endl;
-	response << message << endl;
+	if (!no_body) {
+		response << message << endl;
+	}
 	return response.str();
 }
 

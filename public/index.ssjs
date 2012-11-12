@@ -39,7 +39,10 @@
 						}
 						str += included.private_func + "<br>";
 						str += included.reverse_string("foo fighters") + "<br>";
-						str += CURRENT_DIRECTORY;
+						str += CURRENT_DIRECTORY + "<br>";
+
+						str += _POST[0];
+
 						return str;
 					}
 				}

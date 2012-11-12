@@ -23,7 +23,6 @@ VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpret
 Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	using namespace v8;
 
-	// We will be creating temporary handles so we use a handle scope.
 	HandleScope handle_scope;
 
     Handle<Object> object = Handle<Object>::Cast(args[0]);
@@ -36,7 +35,6 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	string resolved_path = vv::resolve_path(path, current_directory);
 
 	if (resolved_path[resolved_path.length() - 1] == '/') {
-		// reset current directory - necessary?
 		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
 		return handle_scope.Close(String::New(""));
@@ -45,7 +43,6 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	ifstream file(resolved_path);
 
 	if (!file.is_open()) {
-		// reset current directory - necessary?
 		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
 		return handle_scope.Close(String::New(""));
@@ -55,13 +52,11 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	try {
 		result = interpret_file(file, resolved_path);
 	} catch (V8Exception& e) {
-		// reset current directory - necessary?
 		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
 		return handle_scope.Close(String::New(""));
 	}
 
-	// reset current directory - necessary?
 	v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
 
     return handle_scope.Close(result);
@@ -70,21 +65,13 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string& path) {
 	using namespace v8;
 
-	// Create a stack-allocated handle scope.
 	HandleScope handle_scope;
-
-	//Get the context's global scope (that's where we'll put the constructor)
 	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
-	 
-	//create function template for our constructor
-	//it will call the constructPoint function
+
 	v8::Handle<v8::FunctionTemplate> function = v8::FunctionTemplate::New(VroomVroomInterpreter::Require);
-	 
-	//set the function in the global scope -- that is, set "Point" to the constructor
 	global->Set(v8::String::New("require"), function->GetFunction());
 
 	string public_cd(vv::get_directory_from_path(vv::system_path_to_public_path(path)));
-
 	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(public_cd.c_str()));
 
 	std::string str;
@@ -133,6 +120,13 @@ string VroomVroomInterpreter::interpret() {
 	// Create a new context.
 	Persistent<Context> context = Context::New();
 	Context::Scope context_scope(context);
+	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
+
+	Local<Array> post_array = v8::Array::New(post_data_.size());
+	for (int i = 0; i < post_data_.size(); ++i) {
+		post_array->Set(v8::Number::New(i), v8::String::New(post_data_[i].c_str()));
+	}
+	global->Set(v8::String::New("_POST"), post_array);
 
 	Handle<Value> result;
 	try {

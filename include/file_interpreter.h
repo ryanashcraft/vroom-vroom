@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <memory>
+#include <vector>
 
 class FileInterpreter {
 public:
@@ -14,9 +15,11 @@ public:
 		return mime_;
 	}
 	virtual std::string interpret() = 0;
+	void set_post_data(std::vector<std::string>&& post_data);
 protected:
 	const std::string path_;
 	const std::string mime_;
+	std::vector<std::string> post_data_;
 };
 
 #endif
