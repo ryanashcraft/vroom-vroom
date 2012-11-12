@@ -18,13 +18,13 @@ v8=$(v8dir)/out/x64.debug/libv8_base.a
 v8+=$(v8dir)/out/x64.debug/libv8_snapshot.a
 DLIBS = v8
 LDPARAM = 
-CCPARAM = -std=c++11 -Wall -g -I$(INCS)
+CCPARAM = -std=c++11 -stdlib=libc++ -Wall -g -I$(INCS)
 MACROS =
 endif
 
 ifeq ($(TYPE), release)
 LDPARAM = -s
-CCPARAM = -std=c++11 -Wall -O2 -I$(INCS)
+CCPARAM = -std=c++11 -stdlib=libc++ -Wall -O2 -I$(INCS)
 MACROS = NDEBUG
 endif
 
