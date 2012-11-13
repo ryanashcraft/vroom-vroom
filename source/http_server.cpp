@@ -7,9 +7,9 @@
 #include <cstdlib>
 
 #include "http_server.h"
-#include "date.h"
 #include "file_interpreter.h"
 #include "path_resolution.h"
+#include "http_response.h"
 
 using namespace std;
 
@@ -92,7 +92,8 @@ string HTTPServer::process(const string& message) {
 		}
 
 		if (!vv::file_exists(path)) {
-			return NotFound();
+			HTTPResponse response(HTTP_404, (type == "HEAD"));
+			return response.str();
 		}
 
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
@@ -106,8 +107,8 @@ string HTTPServer::process(const string& message) {
 			content = interpreter.get()->interpret();
 		} catch (const HTTPException& e) {
 			switch (e.code()) {
-				case 404: return NotFound();
-				default:  return InternalServerError();
+				case 404: return HTTPResponse(HTTP_404, (type == "HEAD")).str();
+				default:  return HTTPResponse(HTTP_500, (type == "HEAD")).str();
 			}
 		}
 
@@ -115,20 +116,20 @@ string HTTPServer::process(const string& message) {
 		string mime = interpreter.get()->mime();
 		for (auto s = headers.begin(); s != headers.end(); ++s) {
 			if (s->find("Location") == 0) {
-				return Redirect(content, headers);
+				return HTTPResponse(HTTP_302, mime, content, headers).str();
 			}
 
 			if (s->find("HTTP/") == 0) {
 				string status(*s);
 				headers.erase(s);
-				return OK(content, headers, mime, false, status);
+				return HTTPResponse(status, mime, content, headers, (type == "HEAD")).str();
 			}
 		}
 
-		return OK(content, headers, mime, (type == "HEAD"));
+		return HTTPResponse(HTTP_300, mime, content, headers, (type == "HEAD")).str();
 	}
 
-	return NotImplemented();
+	return HTTPResponse(HTTP_502, (type == "HEAD")).str();
 }
 
 unordered_map<string, string> HTTPServer::parse_post_data(const string& message) {
@@ -189,78 +190,4 @@ const string HTTPServer::url_decode(const string& str) const {
 	}
 
 	return result;
-}
-
-string HTTPServer::OK(const string& message, vector<string>& headers, const string mime, bool no_body, const string status) {
-	stringstream response;
-	response << status << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Accept-Ranges: bytes" << endl;
-	response << "Content-Length: " << message.length() << endl;
-	response << "Connection: close" << endl;
-	response << "Content-Type: " << mime << endl;
-
-	for (string& s : headers) {
-		response << s << endl;
-	}
-
-	// Empty line for separation of header and content
-	response << endl;
-
-	if (!no_body) {
-		response << message << endl;
-	}
-	return response.str();
-}
-
-string HTTPServer::Redirect(const string& message, vector<string>& headers) {
-	stringstream response;
-	response << "HTTP/1.1 302 Found" << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-
-	for (string& s : headers) {
-		response << s << endl;
-	}
-
-	return response.str();
-}
-
-string HTTPServer::BadRequest(const string& message) {
-	stringstream response;
-	response << "HTTP/1.1 400 Bad Request" << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: text/html" << endl;
-	response << "Content-Length: " << message.length() << endl;
-	response << message;
-	return response.str();
-}
-
-string HTTPServer::NotFound(const string& message) {
-	stringstream response;
-	response << "HTTP/1.1 404 Not Found" << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: text/html" << endl;
-	response << "Content-Length: " << message.length() << endl;
-	response << message;
-	return response.str();
-}
-
-string HTTPServer::InternalServerError(const string& message) {
-	stringstream response;
-	response << "HTTP/1.1 500 Internal Server Error" << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: text/html" << endl;
-	response << "Content-Length: " << message.length() << endl;
-	response << message;
-	return response.str();
-}
-
-string HTTPServer::NotImplemented(const string& message) {
-	stringstream response;
-	response << "HTTP/1.0 502 Not Implemented" << endl;
-	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
-	response << "Content-Type: text/html" << endl;
-	response << "Content-Length: " << message.length() << endl;
-	response << message;
-	return response.str();
 }

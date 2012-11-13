@@ -51,8 +51,6 @@
 		}
 	}
 
-	HEADERS.push("Location: http://ryanashcraft.me/");
-
 	return json2xml(doc);
 })();
 
