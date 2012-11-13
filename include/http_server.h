@@ -15,7 +15,7 @@ public:
 protected:
 	std::string accept(Socket& client);	
 	virtual std::string process(const std::string& message);
-	std::string OK(const std::string& message, std::vector<std::string>& headers, const std::string mime, bool no_body=false);
+	std::string OK(const std::string& message, std::vector<std::string>& headers, const std::string mime, bool no_body=false, const std::string status=std::string("HTTP/1.1 200 OK"));
 	std::string Redirect(const std::string& message, std::vector<std::string>& headers);
 	std::string BadRequest(const std::string& message="");
 	std::string NotFound(const std::string& message="");

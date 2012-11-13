@@ -113,9 +113,15 @@ string HTTPServer::process(const string& message) {
 
 		vector<string> headers = interpreter.get()->get_headers();
 		string mime = interpreter.get()->mime();
-		for (string& s : headers) {
-			if (s.find("Location") != string::npos) {
+		for (auto s = headers.begin(); s != headers.end(); ++s) {
+			if (s->find("Location") == 0) {
 				return Redirect(content, headers);
+			}
+
+			if (s->find("HTTP/") == 0) {
+				string status(*s);
+				headers.erase(s);
+				return OK(content, headers, mime, false, status);
 			}
 		}
 
@@ -185,9 +191,9 @@ const string HTTPServer::url_decode(const string& str) const {
 	return result;
 }
 
-string HTTPServer::OK(const string& message, vector<string>& headers, const string mime, bool no_body) {
+string HTTPServer::OK(const string& message, vector<string>& headers, const string mime, bool no_body, const string status) {
 	stringstream response;
-	response << "HTTP/1.1 200 OK" << endl;
+	response << status << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Accept-Ranges: bytes" << endl;
 	response << "Content-Length: " << message.length() << endl;
