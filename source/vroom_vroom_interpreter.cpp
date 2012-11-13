@@ -14,6 +14,7 @@ using namespace v8;
 
 #define JS_NAME_CURRENT_DIRECTORY "CURRENT_DIRECTORY"
 #define JS_NAME_POST_OBJECT "POST"
+#define JS_NAME_HEADERS "HEADERS"
 
 string v8_string_to_string(const String::Utf8Value& value) {
   return *value ? string(*value) : "";
@@ -126,6 +127,8 @@ string VroomVroomInterpreter::interpret() {
 	}
 	global->Set(String::New(JS_NAME_POST_OBJECT), post_object);
 
+	global->Set(String::New(JS_NAME_HEADERS), Array::New());
+
 	Handle<Value> result;
 	try {
 		result = interpret_file(file, path_);
@@ -137,7 +140,7 @@ string VroomVroomInterpreter::interpret() {
 	Local<String> str(result->ToString());
 
 	// Get headers (if any)
-	Handle<Value> headersv = global->Get(String::New("HEADERS"));
+	Handle<Value> headersv = global->Get(String::New(JS_NAME_HEADERS));
 	if (!headersv.IsEmpty() && headersv->IsArray()) {
 		Handle<Array> headers = Handle<Array>::Cast<Value>(headersv);
 		for (int i = 0; i < headers->Length(); ++i) {
