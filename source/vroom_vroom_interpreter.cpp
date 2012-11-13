@@ -65,6 +65,7 @@ Handle<Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string
 	HandleScope handle_scope;
 	Handle<Object> global = Context::GetCurrent()->Global();
 
+	// Register require JS function
 	Handle<FunctionTemplate> function = FunctionTemplate::New(VroomVroomInterpreter::Require);
 	global->Set(String::New("require"), function->GetFunction());
 
@@ -134,6 +135,18 @@ string VroomVroomInterpreter::interpret() {
 	}
 
 	Local<String> str(result->ToString());
+
+	// Get headers (if any)
+	Handle<Value> headersv = global->Get(String::New("HEADERS"));
+	if (!headersv.IsEmpty() && headersv->IsArray()) {
+		Handle<Array> headers = Handle<Array>::Cast<Value>(headersv);
+		for (int i = 0; i < headers->Length(); ++i) {
+			Handle<Value> header = headers->Get(Number::New(i));
+			if (!header.IsEmpty()) {
+				headers_.push_back(v8_string_to_string(String::Utf8Value(header)));
+			}
+		}
+	}
 
 	// Dispose the persistent context.
 	context.Dispose();

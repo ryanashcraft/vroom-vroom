@@ -2,6 +2,7 @@
 #ifndef HTTP_SERVER_H_
 #define HTTP_SERVER_H_
 
+#include <vector>
 #include <unordered_map>
 
 #include "server.h"
@@ -14,7 +15,8 @@ public:
 protected:
 	std::string accept(Socket& client);	
 	virtual std::string process(const std::string& message);
-	std::string OK(const std::string& message, const std::string mime, bool no_body=false);
+	std::string OK(const std::string& message, std::vector<std::string>& headers, const std::string mime, bool no_body=false);
+	std::string Redirect(const std::string& message, std::vector<std::string>& headers);
 	std::string BadRequest(const std::string& message="");
 	std::string NotFound(const std::string& message="");
 	std::string InternalServerError(const std::string& message="");

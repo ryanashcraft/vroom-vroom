@@ -41,8 +41,8 @@
 						str += included.reverse_string("foo fighters") + "<br>";
 						str += CURRENT_DIRECTORY + "<br>";
 
-						str += _POST.filename + "<br>";
-						str += _POST.greeting + "<br>";
+						str += POST.filename + "<br>";
+						str += POST.greeting + "<br>";
 
 						return str;
 					}
@@ -50,6 +50,9 @@
 			}
 		}
 	}
+
+	HEADERS = [];
+	HEADERS.push("Location: http://ryanashcraft.me/");
 
 	return json2xml(doc);
 })();

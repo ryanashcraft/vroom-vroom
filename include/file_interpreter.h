@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <memory>
+#include <vector>
 #include <unordered_map>
 
 class FileInterpreter {
@@ -16,10 +17,14 @@ public:
 	}
 	virtual std::string interpret() = 0;
 	void set_post_data(std::unordered_map<std::string, std::string>&& post_data);
+	std::vector<std::string> get_headers() const {
+		return headers_;
+	}
 protected:
 	const std::string path_;
 	const std::string mime_;
 	std::unordered_map<std::string, std::string> post_data_;
+	std::vector<std::string> headers_;
 };
 
 #endif

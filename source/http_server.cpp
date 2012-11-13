@@ -111,7 +111,15 @@ string HTTPServer::process(const string& message) {
 			}
 		}
 
-		return OK(content, interpreter.get()->mime(), (type == "HEAD"));
+		vector<string> headers = interpreter.get()->get_headers();
+		string mime = interpreter.get()->mime();
+		for (string& s : headers) {
+			if (s.find("Location") != string::npos) {
+				return Redirect(content, headers);
+			}
+		}
+
+		return OK(content, headers, mime, (type == "HEAD"));
 	}
 
 	return NotImplemented();
@@ -144,7 +152,7 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 }
 
 // http://dlib.net/dlib/server/server_http_1.h.html
-unsigned char HTTPServer::from_hex (unsigned char ch) const {
+unsigned char HTTPServer::from_hex(unsigned char ch) const {
 	if (ch <= '9' && ch >= '0')
 	    ch -= '0';
 	else if (ch <= 'f' && ch >= 'a')
@@ -177,23 +185,43 @@ const string HTTPServer::url_decode(const string& str) const {
 	return result;
 }
 
-string HTTPServer::OK(const string& message, const string mime, bool no_body) {
+string HTTPServer::OK(const string& message, vector<string>& headers, const string mime, bool no_body) {
 	stringstream response;
 	response << "HTTP/1.1 200 OK" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Accept-Ranges: bytes" << endl;
 	response << "Content-Length: " << message.length() << endl;
 	response << "Connection: close" << endl;
-	response << "Content-Type: " << mime << endl << endl;
+	response << "Content-Type: " << mime << endl;
+
+	for (string& s : headers) {
+		response << s << endl;
+	}
+
+	// Empty line for separation of header and content
+	response << endl;
+
 	if (!no_body) {
 		response << message << endl;
 	}
 	return response.str();
 }
 
+string HTTPServer::Redirect(const string& message, vector<string>& headers) {
+	stringstream response;
+	response << "HTTP/1.1 302 Found" << endl;
+	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
+
+	for (string& s : headers) {
+		response << s << endl;
+	}
+
+	return response.str();
+}
+
 string HTTPServer::BadRequest(const string& message) {
 	stringstream response;
-	response << "HTTP/1.0 400 Bad Request" << endl;
+	response << "HTTP/1.1 400 Bad Request" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Content-Type: text/html" << endl;
 	response << "Content-Length: " << message.length() << endl;
@@ -203,7 +231,7 @@ string HTTPServer::BadRequest(const string& message) {
 
 string HTTPServer::NotFound(const string& message) {
 	stringstream response;
-	response << "HTTP/1.0 404 Not Found" << endl;
+	response << "HTTP/1.1 404 Not Found" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Content-Type: text/html" << endl;
 	response << "Content-Length: " << message.length() << endl;
@@ -213,7 +241,7 @@ string HTTPServer::NotFound(const string& message) {
 
 string HTTPServer::InternalServerError(const string& message) {
 	stringstream response;
-	response << "HTTP/1.0 500 Internal Server Error" << endl;
+	response << "HTTP/1.1 500 Internal Server Error" << endl;
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Content-Type: text/html" << endl;
 	response << "Content-Length: " << message.length() << endl;
