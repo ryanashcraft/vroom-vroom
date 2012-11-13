@@ -12,30 +12,29 @@
 using namespace std;
 using namespace v8;
 
-string v8_string_to_string(const v8::String::Utf8Value& value) {
-  return *value ? string(*value) : "<string conversion failed>";
+#define JS_NAME_CURRENT_DIRECTORY "CURRENT_DIRECTORY"
+#define JS_NAME_POST_OBJECT "POST"
+
+string v8_string_to_string(const String::Utf8Value& value) {
+  return *value ? string(*value) : "";
 }
 
 VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	
 }
 
-Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
-	using namespace v8;
-
+Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
 	HandleScope handle_scope;
-
-    Handle<Object> object = Handle<Object>::Cast(args[0]);
 
 	String::Utf8Value utfpath(args[0]);
 	string path(v8_string_to_string(utfpath));
 
-	Handle<String> cd = Handle<String>::Cast(v8::Context::GetCurrent()->Global()->Get(v8::String::New("CURRENT_DIRECTORY")));
+	Handle<String> cd = Handle<String>::Cast(Context::GetCurrent()->Global()->Get(String::New(JS_NAME_CURRENT_DIRECTORY)));
 	string current_directory(v8_string_to_string(String::Utf8Value(cd)));
 	string resolved_path = vv::resolve_path(path, current_directory);
 
 	if (resolved_path[resolved_path.length() - 1] == '/') {
-		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
 
 		return handle_scope.Close(String::New(""));
 	}
@@ -43,7 +42,7 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	ifstream file(resolved_path);
 
 	if (!file.is_open()) {
-		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
 
 		return handle_scope.Close(String::New(""));
 	}
@@ -52,27 +51,25 @@ Handle<v8::Value> VroomVroomInterpreter::Require(const v8::Arguments& args) {
 	try {
 		result = interpret_file(file, resolved_path);
 	} catch (V8Exception& e) {
-		v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
 
 		return handle_scope.Close(String::New(""));
 	}
 
-	v8::Context::GetCurrent()->Global()->Set(v8::String::New("CURRENT_DIRECTORY"), cd);
+	Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
 
     return handle_scope.Close(result);
 }
 
-Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string& path) {
-	using namespace v8;
-
+Handle<Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string& path) {
 	HandleScope handle_scope;
-	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
+	Handle<Object> global = Context::GetCurrent()->Global();
 
-	v8::Handle<v8::FunctionTemplate> function = v8::FunctionTemplate::New(VroomVroomInterpreter::Require);
-	global->Set(v8::String::New("require"), function->GetFunction());
+	Handle<FunctionTemplate> function = FunctionTemplate::New(VroomVroomInterpreter::Require);
+	global->Set(String::New("require"), function->GetFunction());
 
 	string public_cd(vv::get_directory_from_path(vv::system_path_to_public_path(path)));
-	global->Set(v8::String::New("CURRENT_DIRECTORY"), v8::String::New(public_cd.c_str()));
+	global->Set(String::New(JS_NAME_CURRENT_DIRECTORY), String::New(public_cd.c_str()));
 
 	std::string str;
 
@@ -88,7 +85,7 @@ Handle<v8::Value> VroomVroomInterpreter::interpret_file(ifstream& file, const st
 
 	file.close();
 
-	v8::TryCatch try_catch;
+	TryCatch try_catch;
 
 	// Compile the source code.
 	Handle<Script> script = Script::Compile(source);
@@ -120,13 +117,13 @@ string VroomVroomInterpreter::interpret() {
 	// Create a new context.
 	Persistent<Context> context = Context::New();
 	Context::Scope context_scope(context);
-	v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
+	Handle<Object> global = Context::GetCurrent()->Global();
 
-	Local<Object> post_object = v8::Object::New();
+	Local<Object> post_object = Object::New();
 	for (unordered_map<string, string>::iterator iterator = post_data_.begin(); iterator != post_data_.end(); ++iterator) {
-		post_object->Set(v8::String::New(iterator->first.c_str()), v8::String::New(iterator->second.c_str()));
+		post_object->Set(String::New(iterator->first.c_str()), String::New(iterator->second.c_str()));
 	}
-	global->Set(v8::String::New("_POST"), post_object);
+	global->Set(String::New(JS_NAME_POST_OBJECT), post_object);
 
 	Handle<Value> result;
 	try {
