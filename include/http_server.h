@@ -18,6 +18,7 @@ protected:
 private:
 	static bool is_valid_http_message(std::string& message);
 	static std::unordered_map<std::string, std::string> parse_post_data(const std::string& message);
+	static std::unordered_map<std::string, std::string> url_encoded_variables_to_map(const std::string& content);
 	static unsigned char from_hex(unsigned char ch);
 	static const std::string url_decode(const std::string& str);
 };

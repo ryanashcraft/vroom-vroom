@@ -144,23 +144,44 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 	if (message_start != string::npos) {
 		string content(message.substr(message_start + 4));
 
-		stringstream ss(content);
-		do {
-			string lvalue, rvalue;
-			
-			if (!getline(ss, lvalue, '=')) {
-				break;
-			}
-
-			if (!getline(ss, rvalue, '&')) {
-				break;
-			}
-
-		 	post_data[url_decode(lvalue)] = url_decode(rvalue);
-		} while (ss);
+		post_data = url_encoded_variables_to_map(content);
 	}
 
 	return post_data;
+}
+
+unordered_map<string, string> HTTPServer::parse_get_data(const string& message) {
+	unordered_map<string, string> post_data;
+
+	size_t message_start = message.find("\r\n\r\n");
+	if (message_start != string::npos) {
+		string content(message.substr(message_start + 4));
+
+		post_data = url_encoded_variables_to_map(content);
+	}
+
+	return post_data;
+}
+
+unordered_map<string, string> HTTPServer::url_encoded_variables_to_map(const string& content) {
+	unordered_map<string, string> map;
+
+	stringstream ss(content);
+	do {
+		string lvalue, rvalue;
+		
+		if (!getline(ss, lvalue, '=')) {
+			break;
+		}
+
+		if (!getline(ss, rvalue, '&')) {
+			break;
+		}
+
+	 	map[url_decode(lvalue)] = url_decode(rvalue);
+	} while (ss);
+
+	return mapc;
 }
 
 // http://dlib.net/dlib/server/server_1.h.html
