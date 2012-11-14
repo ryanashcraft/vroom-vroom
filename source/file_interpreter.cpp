@@ -10,6 +10,7 @@
 #include "path_resolution.h"
 
 using namespace std;
+using namespace vv;
 
 static unordered_map<string, string> binary_extension_to_mime_map({
 	{"png", "image/png"},

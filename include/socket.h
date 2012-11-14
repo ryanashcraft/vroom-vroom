@@ -11,19 +11,21 @@
 
 #include "socket_exception.h"
 
-class Socket {
-public:
-	Socket();
-	// Socket(Socket &s);
-	Socket(int descriptor_);
-	void bind(unsigned short port);
-	void listen(unsigned int max_requests=5);
-	Socket accept() const;
-	int receive(unsigned int buffer_size, char* buffer) const;
-	void send(std::string& message) const;
-	void close() const;
-private:
-	int descriptor_;
-};
+namespace vv {
+	class Socket {
+	public:
+		Socket();
+		// Socket(Socket &s);
+		Socket(int descriptor_);
+		void bind(unsigned short port);
+		void listen(unsigned int max_requests=5);
+		Socket accept() const;
+		int receive(unsigned int buffer_size, char* buffer) const;
+		void send(std::string& message) const;
+		void close() const;
+	private:
+		int descriptor_;
+	};
+}
 
 #endif

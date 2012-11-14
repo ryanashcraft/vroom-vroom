@@ -4,6 +4,7 @@
 #include "socket.h"
 
 using namespace std;
+using namespace vv;
 
 Socket::Socket() {
 	if ((descriptor_ = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {

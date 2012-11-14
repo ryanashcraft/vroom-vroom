@@ -4,6 +4,7 @@
 const size_t MAX_BUFFER_SIZE = 256;
 
 using namespace std;
+using namespace vv;
 
 string Date::now(const string& format) {
 	time_t t = time(0);

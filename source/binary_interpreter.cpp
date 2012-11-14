@@ -6,6 +6,7 @@
 #include "http_exception.h"
 
 using namespace std;
+using namespace vv;
 
 BinaryInterpreter::BinaryInterpreter(const string& path, const string& mime) : FileInterpreter(path, mime) {
 	

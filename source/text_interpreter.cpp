@@ -5,6 +5,7 @@
 #include "http_exception.h"
 
 using namespace std;
+using namespace vv;
 
 TextInterpreter::TextInterpreter(const string& path, const string& mime) : FileInterpreter(path, mime) {
 	

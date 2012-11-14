@@ -7,10 +7,12 @@
 
 #include "file_interpreter.h"
 
-class TextInterpreter : public FileInterpreter {
-public:
-	explicit TextInterpreter(const std::string& path, const std::string& mime="text/plain");
-	std::string interpret();
-};
+namespace vv {
+	class TextInterpreter : public vv::FileInterpreter {
+	public:
+		explicit TextInterpreter(const std::string& path, const std::string& mime="text/plain");
+		std::string interpret();
+	};
+}
 
 #endif

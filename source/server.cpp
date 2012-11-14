@@ -4,6 +4,7 @@
 #include "server.h"
 
 using namespace std;
+using namespace vv;
 
 Server::Server(unsigned short port) : port_(port) {
 	try {

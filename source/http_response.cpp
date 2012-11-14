@@ -7,6 +7,7 @@
 #include "date.h"
 
 using namespace std;
+using namespace vv;
 
 static unordered_map<int, string> code_to_status_map({
 	{300, "HTTP/1.1 300 OK"},

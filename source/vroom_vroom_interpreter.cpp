@@ -11,6 +11,7 @@
 
 using namespace std;
 using namespace v8;
+using namespace vv;
 
 #define JS_NAME_CURRENT_DIRECTORY "CURRENT_DIRECTORY"
 #define JS_NAME_GET_OBJECT "GET"

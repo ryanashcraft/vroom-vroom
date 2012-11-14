@@ -13,6 +13,7 @@
 #include "http_response.h"
 
 using namespace std;
+using namespace vv;
 
 #define BUFFER_SIZE 128
 

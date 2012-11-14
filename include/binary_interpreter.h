@@ -7,10 +7,12 @@
 
 #include "file_interpreter.h"
 
-class BinaryInterpreter : public FileInterpreter {
-public:
-	explicit BinaryInterpreter(const std::string& path, const std::string& mime);
-	std::string interpret();
-};
+namespace vv {
+	class BinaryInterpreter : public vv::FileInterpreter {
+	public:
+		explicit BinaryInterpreter(const std::string& path, const std::string& mime);
+		std::string interpret();
+	};
+}
 
 #endif
