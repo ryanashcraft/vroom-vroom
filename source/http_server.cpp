@@ -151,7 +151,7 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 				break;
 			}
 
-		 	post_data[lvalue] = rvalue;
+		 	post_data[url_decode(lvalue)] = url_decode(rvalue);
 		} while (ss);
 	}
 
