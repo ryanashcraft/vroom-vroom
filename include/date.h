@@ -6,9 +6,11 @@
 #include <ctime>
 
 namespace vv {
+	using namespace std;
+
 	class Date {
 	public:
-		static std::string now(const std::string& format);
+		static string now(const string& format);
 	};
 }
 

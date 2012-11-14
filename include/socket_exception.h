@@ -3,9 +3,11 @@
 #define SOCKET_EXCEPTION_H
 
 namespace vv {
-	class SocketException : public std::exception {
+	using namespace std;
+
+	class SocketException : public exception {
 	public:
-		explicit SocketException(const std::string& message) : message_("SocketException: " + message) {
+		explicit SocketException(const string& message) : message_("SocketException: " + message) {
 
 		}
 
@@ -13,7 +15,7 @@ namespace vv {
 			return message_.c_str();
 		}
 	private:
-		std::string message_;
+		string message_;
 	};
 }
 

@@ -6,20 +6,22 @@
 #include <vector>
 
 namespace vv {
+	using namespace std;
+
 	class HTTPResponse {
 	public:
-		HTTPResponse(int code, std::string& mime, std::string& content, std::vector<std::string>& headers, bool head=false);
-		HTTPResponse(std::string& status, std::string& mime, std::string& content, std::vector<std::string>& headers, bool head=false);
+		HTTPResponse(int code, string& mime, string& content, vector<string>& headers, bool head=false);
+		HTTPResponse(string& status, string& mime, string& content, vector<string>& headers, bool head=false);
 		HTTPResponse(int code, bool head=false);
-		std::string str();
+		string str();
 		void set_head_only(bool head_only) {
 			head_ = head_only;
 		}
 	private:
-		std::string status_;
-		std::string mime_;
-		std::string content_;
-		std::vector<std::string> headers_;
+		string status_;
+		string mime_;
+		string content_;
+		vector<string> headers_;
 		bool head_;
 	};
 }

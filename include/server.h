@@ -5,6 +5,8 @@
 #include "socket.h"
 
 namespace vv {
+	using namespace std;
+
 	class Server {
 	public:
 		Server(unsigned short port);

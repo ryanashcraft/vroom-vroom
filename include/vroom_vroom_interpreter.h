@@ -10,16 +10,18 @@
 #include "file_interpreter.h"
 
 namespace vv {
+	using namespace std;
+
 	class VroomVroomInterpreter : public vv::FileInterpreter {
 	public:
-		explicit VroomVroomInterpreter(const std::string& path);
+		explicit VroomVroomInterpreter(const string& path);
 		virtual ~VroomVroomInterpreter();
-		std::string mime() {
+		string mime() {
 			return "text/html";
 		}
-		std::string interpret();
+		string interpret();
 	private:
-		static v8::Handle<v8::Value> interpret_file(std::ifstream& file, const std::string& path);
+		static v8::Handle<v8::Value> interpret_file(ifstream& file, const string& path);
 		static v8::Handle<v8::Value> Require(const v8::Arguments& args);
 		v8::Isolate* isolate_;
 	};

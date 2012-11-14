@@ -9,25 +9,27 @@
 #include <unordered_map>
 
 namespace vv {
+	using namespace std;
+	
 	class FileInterpreter {
 	public:
-		explicit FileInterpreter(const std::string& path, const std::string& mime);
-		static std::unique_ptr<FileInterpreter> file_interpreter_for_path(const std::string& path);
-		virtual std::string mime() {
+		explicit FileInterpreter(const string& path, const string& mime);
+		static unique_ptr<FileInterpreter> file_interpreter_for_path(const string& path);
+		virtual string mime() {
 			return mime_;
 		}
-		virtual std::string interpret() = 0;
-		void set_get_data(std::unordered_map<std::string, std::string>&& get_data);
-		void set_post_data(std::unordered_map<std::string, std::string>&& post_data);
-		std::vector<std::string> get_headers() const {
+		virtual string interpret() = 0;
+		void set_get_data(unordered_map<string, string>&& get_data);
+		void set_post_data(unordered_map<string, string>&& post_data);
+		vector<string> get_headers() const {
 			return headers_;
 		}
 	protected:
-		const std::string path_;
-		const std::string mime_;
-		std::unordered_map<std::string, std::string> get_data_;
-		std::unordered_map<std::string, std::string> post_data_;
-		std::vector<std::string> headers_;
+		const string path_;
+		const string mime_;
+		unordered_map<string, string> get_data_;
+		unordered_map<string, string> post_data_;
+		vector<string> headers_;
 	};
 }
 

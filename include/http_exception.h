@@ -5,9 +5,11 @@
 #include <string>
 
 namespace vv {
-	class HTTPException : public std::exception {
+	using namespace std;
+
+	class HTTPException : public exception {
 	public:
-		explicit HTTPException(unsigned int code, const std::string& path) : code_(code), path_(path) {
+		explicit HTTPException(unsigned int code, const string& path) : code_(code), path_(path) {
 
 		}
 		const char* what() const throw() {
@@ -18,7 +20,7 @@ namespace vv {
 		}
 	private:
 		unsigned int code_;
-		std::string path_;
+		string path_;
 	};
 }
 
