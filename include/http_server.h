@@ -13,13 +13,13 @@ public:
 	HTTPServer(unsigned short port);
 	void handle();
 protected:
-	std::string accept(Socket& client);	
-	virtual std::string process(const std::string& message);
+	static std::string accept(const Socket& client);	
+	static std::string process(const std::string& message);
 private:
-	bool is_valid_http_message(std::string& message);
-	std::unordered_map<std::string, std::string> parse_post_data(const std::string& message);
-	unsigned char from_hex(unsigned char ch) const;
-	const std::string url_decode(const std::string& str) const;
+	static bool is_valid_http_message(std::string& message);
+	static std::unordered_map<std::string, std::string> parse_post_data(const std::string& message);
+	static unsigned char from_hex(unsigned char ch);
+	static const std::string url_decode(const std::string& str);
 };
 
 #endif

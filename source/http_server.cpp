@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <regex.h>
 #include <cstdlib>
 
@@ -20,13 +21,17 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 }
 
 void HTTPServer::handle() {
-	Socket client = socket_.accept();
-	string reply = process(accept(client));
-	client.send(reply);
-	client.close();
+	Socket client(socket_.accept());
+	thread client_thread([client] () {
+		string request = accept(client);
+		string reply = process(request);
+		client.send(reply);
+		client.close();
+	});
+	client_thread.detach();
 }
 
-string HTTPServer::accept(Socket& client) {
+string HTTPServer::accept(const Socket& client) {
 	char buffer[BUFFER_SIZE];
     memset(buffer, 0, BUFFER_SIZE);
 	int received_size = 0;
@@ -159,7 +164,7 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 }
 
 // http://dlib.net/dlib/server/server_1.h.html
-unsigned char HTTPServer::from_hex(unsigned char ch) const {
+unsigned char HTTPServer::from_hex(unsigned char ch) {
 	if (ch <= '9' && ch >= '0')
 	    ch -= '0';
 	else if (ch <= 'f' && ch >= 'a')
@@ -172,7 +177,7 @@ unsigned char HTTPServer::from_hex(unsigned char ch) const {
 	return ch;
 }
 
-const string HTTPServer::url_decode(const string& str) const {
+const string HTTPServer::url_decode(const string& str) {
 	string result;
 	string::size_type i;
 	for (i = 0; i < str.size(); ++i) {

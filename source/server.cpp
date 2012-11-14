@@ -20,5 +20,6 @@ Server::Server(unsigned short port) : port_(port) {
 }
 
 Server::~Server() {
-	socket_.close();
+	const Socket socket_copy(socket_);
+	socket_copy.close();
 }

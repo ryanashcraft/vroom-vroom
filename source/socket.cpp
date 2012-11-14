@@ -38,7 +38,7 @@ void Socket::listen(unsigned int max_requests) {
     }
 }
 
-Socket Socket::accept() {
+Socket Socket::accept() const {
 	int client_descriptor;
 	struct sockaddr_in client_address; /* Client address */
 	unsigned int client_address_size = sizeof(client_address);
@@ -51,7 +51,7 @@ Socket Socket::accept() {
    return Socket(client_descriptor);
 }
 
-int Socket::receive(unsigned int buffer_size, char* buffer) {
+int Socket::receive(unsigned int buffer_size, char* buffer) const {
     int message_size;                    /* Size of received message */
 
     /* Receive message from client */
@@ -62,12 +62,12 @@ int Socket::receive(unsigned int buffer_size, char* buffer) {
     return message_size;
 }
 
-void Socket::send(string& message) {
+void Socket::send(string& message) const {
 	if (::send(descriptor_, message.c_str(), message.length(), 0) != message.length()) {
 		// exception
 	}
 }
 
-void Socket::close() {
+void Socket::close() const {
     ::close(descriptor_);
 }

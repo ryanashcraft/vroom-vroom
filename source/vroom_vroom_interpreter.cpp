@@ -21,7 +21,12 @@ string v8_string_to_string(const String::Utf8Value& value) {
 }
 
 VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
-	
+	isolate_ = Isolate::New();
+	isolate_->Enter();
+}
+
+VroomVroomInterpreter::~VroomVroomInterpreter() {
+	isolate_->Exit();
 }
 
 Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
