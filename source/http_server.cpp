@@ -92,7 +92,7 @@ string HTTPServer::process(const string& message) {
 		}
 
 		if (!vv::file_exists(path)) {
-			HTTPResponse response(HTTP_404, (type == "HEAD"));
+			HTTPResponse response(404, (type == "HEAD"));
 			return response.str();
 		}
 
@@ -107,8 +107,8 @@ string HTTPServer::process(const string& message) {
 			content = interpreter.get()->interpret();
 		} catch (const HTTPException& e) {
 			switch (e.code()) {
-				case 404: return HTTPResponse(HTTP_404, (type == "HEAD")).str();
-				default:  return HTTPResponse(HTTP_500, (type == "HEAD")).str();
+				case 404: return HTTPResponse(404, (type == "HEAD")).str();
+				default:  return HTTPResponse(500, (type == "HEAD")).str();
 			}
 		}
 
@@ -116,7 +116,7 @@ string HTTPServer::process(const string& message) {
 		string mime = interpreter.get()->mime();
 		for (auto s = headers.begin(); s != headers.end(); ++s) {
 			if (s->find("Location") == 0) {
-				return HTTPResponse(HTTP_302, mime, content, headers).str();
+				return HTTPResponse(302, mime, content, headers).str();
 			}
 
 			if (s->find("HTTP/") == 0) {
@@ -126,10 +126,10 @@ string HTTPServer::process(const string& message) {
 			}
 		}
 
-		return HTTPResponse(HTTP_300, mime, content, headers, (type == "HEAD")).str();
+		return HTTPResponse(300, mime, content, headers, (type == "HEAD")).str();
 	}
 
-	return HTTPResponse(HTTP_502, (type == "HEAD")).str();
+	return HTTPResponse(502, (type == "HEAD")).str();
 }
 
 unordered_map<string, string> HTTPServer::parse_post_data(const string& message) {
@@ -158,7 +158,7 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 	return post_data;
 }
 
-// http://dlib.net/dlib/server/server_http_1.h.html
+// http://dlib.net/dlib/server/server_1.h.html
 unsigned char HTTPServer::from_hex(unsigned char ch) const {
 	if (ch <= '9' && ch >= '0')
 	    ch -= '0';
