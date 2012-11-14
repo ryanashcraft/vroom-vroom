@@ -1,6 +1,6 @@
 
-#ifndef V8_EXCEPTION_
-#define V8_EXCEPTION_
+#ifndef V8_EXCEPTION_H_
+#define V8_EXCEPTION_H_
 
 #include <v8.h>
 #include <string>
