@@ -16,6 +16,7 @@ public:
 		return mime_;
 	}
 	virtual std::string interpret() = 0;
+	void set_get_data(std::unordered_map<std::string, std::string>&& get_data);
 	void set_post_data(std::unordered_map<std::string, std::string>&& post_data);
 	std::vector<std::string> get_headers() const {
 		return headers_;
@@ -23,6 +24,7 @@ public:
 protected:
 	const std::string path_;
 	const std::string mime_;
+	std::unordered_map<std::string, std::string> get_data_;
 	std::unordered_map<std::string, std::string> post_data_;
 	std::vector<std::string> headers_;
 };

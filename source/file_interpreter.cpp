@@ -48,3 +48,7 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 void FileInterpreter::set_post_data(unordered_map<string, string>&& post_data) {
 	post_data_ = move(post_data);
 }
+
+void FileInterpreter::set_get_data(unordered_map<string, string>&& get_data) {
+	get_data_ = move(get_data);
+}

@@ -44,6 +44,9 @@
 						str += POST.filename + "<br>";
 						str += POST.greeting + "<br>";
 
+						str += GET.error + "<br>";
+						str += GET.message + "<br>";
+
 						return str;
 					}
 				}

@@ -13,6 +13,7 @@ using namespace std;
 using namespace v8;
 
 #define JS_NAME_CURRENT_DIRECTORY "CURRENT_DIRECTORY"
+#define JS_NAME_GET_OBJECT "GET"
 #define JS_NAME_POST_OBJECT "POST"
 #define JS_NAME_HEADERS "HEADERS"
 
@@ -125,13 +126,22 @@ string VroomVroomInterpreter::interpret() {
 	Persistent<Context> context = Context::New();
 	Context::Scope context_scope(context);
 	Handle<Object> global = Context::GetCurrent()->Global();
+	
+	// Create populated GET array
+	Local<Object> get_object = Object::New();
+	for (unordered_map<string, string>::iterator iterator = get_data_.begin(); iterator != get_data_.end(); ++iterator) {
+		get_object->Set(String::New(iterator->first.c_str()), String::New(iterator->second.c_str()));
+	}
+	global->Set(String::New(JS_NAME_GET_OBJECT), get_object);
 
+	// Create populated POST array
 	Local<Object> post_object = Object::New();
 	for (unordered_map<string, string>::iterator iterator = post_data_.begin(); iterator != post_data_.end(); ++iterator) {
 		post_object->Set(String::New(iterator->first.c_str()), String::New(iterator->second.c_str()));
 	}
 	global->Set(String::New(JS_NAME_POST_OBJECT), post_object);
 
+	// Create empty HEADERS array
 	global->Set(String::New(JS_NAME_HEADERS), Array::New());
 
 	Handle<Value> result;

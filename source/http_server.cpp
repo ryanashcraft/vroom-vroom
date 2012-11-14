@@ -88,6 +88,8 @@ string HTTPServer::process(const string& message) {
 
 		path = vv::resolve_path(path, "/");
 
+		path = path.substr(0, path.find("?"));
+
 		if (path[path.length() - 1] == '/') {
 			if (vv::file_exists(path + "index.ssjs")) {
 				path += "index.ssjs";
@@ -102,6 +104,8 @@ string HTTPServer::process(const string& message) {
 		}
 
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
+
+		interpreter.get()->set_get_data(parse_get_data(message));
 
 		if (type == "POST") {
 			interpreter.get()->set_post_data(parse_post_data(message));
@@ -140,9 +144,9 @@ string HTTPServer::process(const string& message) {
 unordered_map<string, string> HTTPServer::parse_post_data(const string& message) {
 	unordered_map<string, string> post_data;
 
-	size_t message_start = message.find("\r\n\r\n");
+	size_t message_start = message.find("\r\n\r\n") + 4;
 	if (message_start != string::npos) {
-		string content(message.substr(message_start + 4));
+		string content(message.substr(message_start));
 
 		post_data = url_encoded_variables_to_map(content);
 	}
@@ -153,9 +157,13 @@ unordered_map<string, string> HTTPServer::parse_post_data(const string& message)
 unordered_map<string, string> HTTPServer::parse_get_data(const string& message) {
 	unordered_map<string, string> post_data;
 
-	size_t message_start = message.find("\r\n\r\n");
-	if (message_start != string::npos) {
-		string content(message.substr(message_start + 4));
+	string first_line = message.substr(0, message.find("\r\n"));
+
+	size_t params_start = first_line.find("?") + 1;
+	if (params_start != string::npos) {
+		size_t params_end = first_line.find_first_of(' ', params_start + 1);
+
+		string content(first_line.substr(params_start, params_end - params_start));
 
 		post_data = url_encoded_variables_to_map(content);
 	}
@@ -181,7 +189,7 @@ unordered_map<string, string> HTTPServer::url_encoded_variables_to_map(const str
 	 	map[url_decode(lvalue)] = url_decode(rvalue);
 	} while (ss);
 
-	return mapc;
+	return map;
 }
 
 // http://dlib.net/dlib/server/server_1.h.html
