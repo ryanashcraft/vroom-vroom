@@ -4,3 +4,4 @@ vroomvroom
 
 *.dSYM
 .make-*
+.DS_Store
