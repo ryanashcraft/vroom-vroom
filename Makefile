@@ -1,3 +1,5 @@
+# Ryan Ashcraft
+# 
 # Makefile based off of example from http://content.gpwiki.org/index.php/Makefile
 
 V8HOME=~/Apps/Libraries/V8
