@@ -8,6 +8,9 @@
 namespace vv {
 	using namespace std;
 
+	/**
+	 * Exception to throw when an error occurs using the V8 library.
+	 */
 	class V8Exception : public exception {
 	public:
 		// from http://v8.googlecode.com/svn/trunk/samples/shell.cc
