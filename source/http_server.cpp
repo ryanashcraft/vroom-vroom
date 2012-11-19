@@ -55,7 +55,7 @@ string HTTPServer::accept(const Socket& client) {
 }
 
 bool HTTPServer::is_valid_http_message(string& message) {
-	int content_length = 0;
+	size_t content_length = 0;
 
 	RegexMatcher content_length_regex("Content-Length:[ \t]*([0-9]+)");
 	vector<string> matches = content_length_regex.find_matches(string(message)); 

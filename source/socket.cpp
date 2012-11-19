@@ -51,7 +51,7 @@ Socket Socket::accept() const {
 }
 
 int Socket::receive(unsigned int buffer_size, char* buffer) const {
-    int message_size;                    /* Size of received message */
+    int message_size;
 
     if ((message_size = ::recv(descriptor_, buffer, buffer_size, 0)) < 0) {
     	throw SocketException("socket receive failed");	
@@ -61,7 +61,7 @@ int Socket::receive(unsigned int buffer_size, char* buffer) const {
 }
 
 void Socket::send(string message) const {
-	if (::send(descriptor_, message.c_str(), message.length(), 0) != message.length()) {
+	if ((int)::send(descriptor_, message.c_str(), message.length(), 0) != (int)message.length()) {
 		// @todo throw SocketException
 	}
 }

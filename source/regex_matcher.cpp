@@ -21,9 +21,9 @@ vector<string> RegexMatcher::find_matches(string input, unsigned int max_matches
 	int reti = ::regexec(&c_regex_, input.c_str(), max_matches, c_matches, 0);
 	
 	if (reti == 0) {
-		for (int i = 0; i < max_matches; ++i) {
+		for (unsigned int i = 0; i < max_matches; ++i) {
 			regmatch_t match = c_matches[i];
-			if (match.rm_so >= 0 && match.rm_eo <= input.length()) {
+			if (match.rm_so >= 0 && match.rm_eo <= (int)input.length()) {
 				matches.push_back(input.substr(match.rm_so, match.rm_eo - match.rm_so));
 			} else {
 				break;
