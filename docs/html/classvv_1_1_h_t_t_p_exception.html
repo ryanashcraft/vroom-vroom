@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classvv_1_1_h_t_t_p_exception-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">vv::HTTPException Class Reference</div>  </div>
@@ -110,6 +111,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abd7e96fce801bc44c986ea3183a5afa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaf4ee42e1e9406a8e8e022e74edb8d7"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#abaf4ee42e1e9406a8e8e022e74edb8d7">code</a> () const   throw ()</td></tr>
 <tr class="separator:abaf4ee42e1e9406a8e8e022e74edb8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab5543510e725c8d2dfb434e1aba8d740"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#ab5543510e725c8d2dfb434e1aba8d740">code_</a></td></tr>
+<tr class="separator:ab5543510e725c8d2dfb434e1aba8d740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b8c1d416dbfe084b898ccb7e64d3d8"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#ac4b8c1d416dbfe084b898ccb7e64d3d8">path_</a></td></tr>
+<tr class="separator:ac4b8c1d416dbfe084b898ccb7e64d3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Subclass of exception to throw when an unexpected event occurs that disrups normal execution for generating an HTTP response. </p>
@@ -204,6 +212,49 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a string to describe the exception. </p>
 <dl class="section return"><dt>Returns</dt><dd>a character string to describe the exception </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ab5543510e725c8d2dfb434e1aba8d740"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int vv::HTTPException::code_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The HTTP code related to the exception. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac4b8c1d416dbfe084b898ccb7e64d3d8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string vv::HTTPException::path_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The requested file path related to the exception. </p>
 
 </div>
 </div>

@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classvv_1_1_h_t_t_p_response-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">vv::HTTPResponse Class Reference</div>  </div>
@@ -116,6 +117,23 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acf5c9ce6d6b0e25c102f7a8c78e52074"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#acf5c9ce6d6b0e25c102f7a8c78e52074">status_to_code</a> (string &amp;status)</td></tr>
 <tr class="separator:acf5c9ce6d6b0e25c102f7a8c78e52074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aad611c7b901898831710ce2136daff8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#aad611c7b901898831710ce2136daff8d">code_</a></td></tr>
+<tr class="separator:aad611c7b901898831710ce2136daff8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f4b3e4bde8eaa572f90e0f0f23f745f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#a3f4b3e4bde8eaa572f90e0f0f23f745f">status_</a></td></tr>
+<tr class="separator:a3f4b3e4bde8eaa572f90e0f0f23f745f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a283576e2719d450cbfed7624c77b10cb"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#a283576e2719d450cbfed7624c77b10cb">mime_</a></td></tr>
+<tr class="separator:a283576e2719d450cbfed7624c77b10cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437dee06331d4b7016c177761f86a917"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#a437dee06331d4b7016c177761f86a917">content_</a></td></tr>
+<tr class="separator:a437dee06331d4b7016c177761f86a917"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d9f5017ee6591a159dc6f9aaf408e4"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#af4d9f5017ee6591a159dc6f9aaf408e4">headers_</a></td></tr>
+<tr class="separator:af4d9f5017ee6591a159dc6f9aaf408e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e118003e3556ca4dab99a567129f954"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#a1e118003e3556ca4dab99a567129f954">head_</a></td></tr>
+<tr class="separator:a1e118003e3556ca4dab99a567129f954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbcbbe8cfeb0dce6b2387e4a71fae61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_response.html#a2cbcbbe8cfeb0dce6b2387e4a71fae61">close_</a></td></tr>
+<tr class="separator:a2cbcbbe8cfeb0dce6b2387e4a71fae61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines logic and holds attributes required to generate HTTP response strings. </p>
@@ -371,6 +389,154 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Return the generated HTTP response string. </p>
 <dl class="section return"><dt>Returns</dt><dd>the generated HTTP response </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a2cbcbbe8cfeb0dce6b2387e4a71fae61"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool vv::HTTPResponse::close_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>If true, includes a header to signal end of connection with client. </p>
+
+</div>
+</div>
+<a class="anchor" id="aad611c7b901898831710ce2136daff8d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int vv::HTTPResponse::code_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The HTTP code. </p>
+
+</div>
+</div>
+<a class="anchor" id="a437dee06331d4b7016c177761f86a917"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string vv::HTTPResponse::content_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The response content string. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1e118003e3556ca4dab99a567129f954"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool vv::HTTPResponse::head_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>If true, does not include content in response. </p>
+
+</div>
+</div>
+<a class="anchor" id="af4d9f5017ee6591a159dc6f9aaf408e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;string&gt; vv::HTTPResponse::headers_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Additional headers for the response. </p>
+
+</div>
+</div>
+<a class="anchor" id="a283576e2719d450cbfed7624c77b10cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string vv::HTTPResponse::mime_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The content mime type string. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3f4b3e4bde8eaa572f90e0f0f23f745f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string vv::HTTPResponse::status_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The HTTP status code string. </p>
 
 </div>
 </div>
