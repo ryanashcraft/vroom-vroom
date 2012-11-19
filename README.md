@@ -1,5 +1,3 @@
-\mainpage
-
 # vroom vroom
 
 ## Description
