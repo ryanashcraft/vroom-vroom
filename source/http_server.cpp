@@ -201,7 +201,9 @@ unordered_map<string, string> HTTPServer::url_encoded_variables_to_map(const str
 	return map;
 }
 
-// http://dlib.net/dlib/server/server_1.h.html
+/**
+ * @see http://dlib.net/dlib/server/server_1.h.html
+ */
 unsigned char HTTPServer::from_hex(unsigned char ch) {
 	if (ch <= '9' && ch >= '0')
 	    ch -= '0';
