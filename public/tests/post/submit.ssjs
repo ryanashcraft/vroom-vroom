@@ -1,14 +1,14 @@
 (function() {
-	var name = POST.name;
-	var redirect = POST.redirect;
+	var name = __POST__.name;
+	var redirect = __POST__.redirect;
 
 	html = "Hello, " + name;
 
 	if (redirect) {
-		HEADERS.push("Location: http://apple.com/");
+		__HEADERS__.push("Location: http://apple.com/");
 	} else if (name == "Ryan") {
-		HEADERS.push("HTTP/1.1 301 Moved Permanently");
-		HEADERS.push("Location: http://ryanashcraft.me/");
+		__HEADERS__.push("HTTP/1.1 301 Moved Permanently");
+		__HEADERS__.push("Location: http://ryanashcraft.me/");
 	}
 
 	return html;

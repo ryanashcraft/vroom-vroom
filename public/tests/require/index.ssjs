@@ -39,13 +39,13 @@
 						}
 						str += included.private_func + "<br>";
 						str += included.reverse_string("foo fighters") + "<br>";
-						str += CURRENT_DIRECTORY + "<br>";
+						str += __CURRENT_DIRECTORY__ + "<br>";
 
-						str += POST.filename + "<br>";
-						str += POST.greeting + "<br>";
+						str += __POST__.filename + "<br>";
+						str += __POST__.greeting + "<br>";
 
-						str += GET.error + "<br>";
-						str += GET.message + "<br>";
+						str += __GET__.error + "<br>";
+						str += __GET__.message + "<br>";
 
 						return str;
 					}

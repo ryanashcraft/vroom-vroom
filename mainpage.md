@@ -43,3 +43,5 @@ Relative and absolute paths are supported from server-side JavaScript files. The
 HTTP POST and GET data is initalized before interpreting `.ssjs` files. This can be access in the global `__POST__` and `__GET__` variables, which is an object that acts as a key-value map of the data.
 
 The parent directory of the interpreted file is stored as a string in the global variable `__CURRENT_DIRECTORY__`.
+
+Custom headers for the HTTP response can be defined in the server-side JavaScript with the global `__HEADERS__` array.

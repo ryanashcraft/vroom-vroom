@@ -14,10 +14,10 @@ using namespace std;
 using namespace v8;
 using namespace vv;
 
-#define JS_NAME_CURRENT_DIRECTORY "CURRENT_DIRECTORY"
-#define JS_NAME_GET_OBJECT "GET"
-#define JS_NAME_POST_OBJECT "POST"
-#define JS_NAME_HEADERS "HEADERS"
+#define JS_NAME_CURRENT_DIRECTORY "__CURRENT_DIRECTORY__"
+#define JS_NAME_GET_OBJECT "__GET__"
+#define JS_NAME_POST_OBJECT "__POST__"
+#define JS_NAME_HEADERS "__HEADERS__"
 
 string v8_string_to_string(const String::Utf8Value& value) {
   return *value ? string(*value) : "";
