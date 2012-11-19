@@ -9,6 +9,15 @@ namespace vv {
 	using namespace std;
 
 	/**
+	 * @file path_resolution.h
+	 *
+	 * Contains required logic for handling various file path operations.
+	 *
+	 * @defgroup PathResolution Path Resolution
+	 * @{
+	 */
+
+	/**
 	 * Check if file exists at given file path
 	 * @param  path the requested file path
 	 * @return          true if the file exists at given path
@@ -51,6 +60,10 @@ namespace vv {
 	 * @return      the visible file path from the public directory
 	 */
 	string system_path_to_public_path(string path);
+
+	/**
+	 * @}
+	 */
 }
 
 #endif
