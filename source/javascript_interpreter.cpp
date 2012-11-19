@@ -155,7 +155,7 @@ string JavaScriptInterpreter::interpret() {
 	Handle<Value> headersv = global->Get(String::New(JS_NAME_HEADERS));
 	if (!headersv.IsEmpty() && headersv->IsArray()) {
 		Handle<Array> headers = Handle<Array>::Cast<Value>(headersv);
-		for (int i = 0; i < headers->Length(); ++i) {
+		for (unsigned int i = 0; i < headers->Length(); ++i) {
 			Handle<Value> header = headers->Get(Number::New(i));
 			if (!header.IsEmpty()) {
 				headers_.push_back(v8_string_to_string(String::Utf8Value(header)));
