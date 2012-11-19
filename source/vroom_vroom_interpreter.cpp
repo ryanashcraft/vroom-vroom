@@ -8,6 +8,7 @@
 #include "http_exception.h"
 #include "v8_exception.h"
 #include "path_resolution.h"
+#include "deferred.h"
 
 using namespace std;
 using namespace v8;
@@ -39,19 +40,19 @@ Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
 
 	Handle<String> cd = Handle<String>::Cast(Context::GetCurrent()->Global()->Get(String::New(JS_NAME_CURRENT_DIRECTORY)));
 	string current_directory(v8_string_to_string(String::Utf8Value(cd)));
-	string resolved_path = vv::resolve_path(path, current_directory);
+	string resolved_path = resolve_path(path, current_directory);
+
+	Deferred d([current_directory] () {
+		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), String::New(current_directory.c_str()));
+	});
 
 	if (resolved_path[resolved_path.length() - 1] == '/') {
-		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
-
 		return handle_scope.Close(String::New(""));
 	}
 
 	ifstream file(resolved_path);
 
 	if (!file.is_open()) {
-		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
-
 		return handle_scope.Close(String::New(""));
 	}
 
@@ -59,12 +60,8 @@ Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
 	try {
 		result = interpret_file(file, resolved_path);
 	} catch (V8Exception& e) {
-		Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
-
 		return handle_scope.Close(String::New(""));
 	}
-
-	Context::GetCurrent()->Global()->Set(String::New(JS_NAME_CURRENT_DIRECTORY), cd);
 
     return handle_scope.Close(result);
 }

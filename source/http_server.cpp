@@ -26,7 +26,6 @@ void HTTPServer::handle() {
 		
 		while (should_continue) {
 			string request = accept(client);
-			cout << request << endl;
 
 			HTTPResponse reply = process(request);
 			client.send(reply.str());
