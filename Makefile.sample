@@ -1,7 +1,7 @@
 # Makefile based off of example from http://content.gpwiki.org/index.php/Makefile
 
 # Uncomment the following line and set the path to the root V8 directory
-# V8HOME = /absolute/path/to/V8
+# V8HOME = /path/to/V8
 
 # The compiler
 C++ = g++
