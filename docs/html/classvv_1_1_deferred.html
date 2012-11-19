@@ -95,19 +95,85 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vv::Deferred Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="deferred_8h_source.html">deferred.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aef55dd1c4ad77e1aa8d20e56f0788e72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef55dd1c4ad77e1aa8d20e56f0788e72"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Deferred</b> (function&lt; void()&gt; func)</td></tr>
+<tr class="memitem:aef55dd1c4ad77e1aa8d20e56f0788e72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_deferred.html#aef55dd1c4ad77e1aa8d20e56f0788e72">Deferred</a> (function&lt; void()&gt; func)</td></tr>
 <tr class="separator:aef55dd1c4ad77e1aa8d20e56f0788e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2dae380f21c0a304129a840230ee784"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_deferred.html#ad2dae380f21c0a304129a840230ee784">~Deferred</a> ()</td></tr>
+<tr class="separator:ad2dae380f21c0a304129a840230ee784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ae43c8acca81a48c16aca6b82f94ac6f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae43c8acca81a48c16aca6b82f94ac6f5"></a>
-function&lt; void()&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>function_</b></td></tr>
+<tr class="memitem:ae43c8acca81a48c16aca6b82f94ac6f5"><td class="memItemLeft" align="right" valign="top">function&lt; void()&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_deferred.html#ae43c8acca81a48c16aca6b82f94ac6f5">function_</a></td></tr>
 <tr class="separator:ae43c8acca81a48c16aca6b82f94ac6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class for constructing objects that call a function on destruction. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aef55dd1c4ad77e1aa8d20e56f0788e72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Deferred::Deferred </td>
+          <td>(</td>
+          <td class="paramtype">function&lt; void()&gt;&#160;</td>
+          <td class="paramname"><em>func</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a <a class="el" href="classvv_1_1_deferred.html">Deferred</a> instance with a function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>the function to call on destruction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad2dae380f21c0a304129a840230ee784"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Deferred::~Deferred </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calls the function. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae43c8acca81a48c16aca6b82f94ac6f5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">function&lt;void()&gt; vv::Deferred::function_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The function to call on destruction. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="deferred_8h_source.html">deferred.h</a></li>
 <li>source/deferred.cpp</li>

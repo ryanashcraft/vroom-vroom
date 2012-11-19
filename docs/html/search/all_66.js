@@ -5,5 +5,6 @@ var searchData=
   ['fileinterpreter',['FileInterpreter',['../classvv_1_1_file_interpreter.html',1,'vv']]],
   ['fileinterpreter',['FileInterpreter',['../classvv_1_1_file_interpreter.html#af3b0661295730437740eb8b7edf4e7e2',1,'vv::FileInterpreter']]],
   ['find_5fmatches',['find_matches',['../classvv_1_1_regex_matcher.html#a315de57afca5d22b45fa6ba7ff34acfa',1,'vv::RegexMatcher']]],
-  ['from_5fhex',['from_hex',['../classvv_1_1_h_t_t_p_server.html#ae67bac31ec878ae10fc7e43bed2b78da',1,'vv::HTTPServer']]]
+  ['from_5fhex',['from_hex',['../classvv_1_1_h_t_t_p_server.html#ae67bac31ec878ae10fc7e43bed2b78da',1,'vv::HTTPServer']]],
+  ['function_5f',['function_',['../classvv_1_1_deferred.html#ae43c8acca81a48c16aca6b82f94ac6f5',1,'vv::Deferred']]]
 ];
