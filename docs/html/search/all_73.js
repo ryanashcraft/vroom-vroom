@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['send',['send',['../classvv_1_1_socket.html#a4a9949257dbe17c4ff45525b57b84a17',1,'vv::Socket']]],
   ['server',['Server',['../classvv_1_1_server.html',1,'vv']]],
   ['server',['Server',['../classvv_1_1_server.html#afdc204b21eae699fb44042665c44bbd0',1,'vv::Server']]],
   ['set_5fconnection_5fclose',['set_connection_close',['../classvv_1_1_h_t_t_p_response.html#a9553180d64cd2b1548311051bcdbc96d',1,'vv::HTTPResponse']]],
@@ -7,6 +8,7 @@ var searchData=
   ['set_5fhead_5fonly',['set_head_only',['../classvv_1_1_h_t_t_p_response.html#a83fb4bebee4ddbc3b8336e63e0672047',1,'vv::HTTPResponse']]],
   ['set_5fpost_5fdata',['set_post_data',['../classvv_1_1_file_interpreter.html#a5b2a1740efda1da12ce2b199e108f956',1,'vv::FileInterpreter']]],
   ['socket',['Socket',['../classvv_1_1_socket.html',1,'vv']]],
+  ['socket',['Socket',['../classvv_1_1_socket.html#a7c3256c4fc6e2c603df73201049fae5a',1,'vv::Socket::Socket()'],['../classvv_1_1_socket.html#ac1697e4e03e0a931e978dd4b1593af5d',1,'vv::Socket::Socket(int descriptor_)']]],
   ['socket_5f',['socket_',['../classvv_1_1_server.html#aa17f30eed8642424f9b5557eefb2111e',1,'vv::Server']]],
   ['socketexception',['SocketException',['../classvv_1_1_socket_exception.html',1,'vv']]],
   ['status_5f',['status_',['../classvv_1_1_h_t_t_p_response.html#a3f4b3e4bde8eaa572f90e0f0f23f745f',1,'vv::HTTPResponse']]],
