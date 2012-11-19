@@ -6,17 +6,34 @@
 #include <vector>
 
 #include <regex.h>
-#include <cstdlib>
 
 namespace vv {
 	using namespace std;
 
+	/**
+	 * Finds matches of a regular expression (extended POSIX format) in input strings.
+	 */
 	class RegexMatcher {
 	public:
+		/**
+		 * Creates a RegexMatcher with an extended POSIX regular expression.
+		 */
 		RegexMatcher(string pattern);
+
+		/**
+		 * Cleans up resources.
+		 */
 		~RegexMatcher();
+
+		/**
+		 * Executes the regular expression on an input string and returns the matching groups
+		 * as a vector of strings.
+		 */
 		vector<string> find_matches(string input, unsigned int max_matches=32);
 	private:
+		/**
+		 * The POSIX data structure for the constructed POSIX regular expression.
+		 */
 		regex_t c_regex_;
 	};
 }
