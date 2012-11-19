@@ -63,7 +63,7 @@ int Socket::receive(unsigned int buffer_size, char* buffer) const {
     return message_size;
 }
 
-void Socket::send(string& message) const {
+void Socket::send(string message) const {
 	if (::send(descriptor_, message.c_str(), message.length(), 0) != message.length()) {
 		// exception
 	}

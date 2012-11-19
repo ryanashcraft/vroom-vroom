@@ -23,7 +23,7 @@ namespace vv {
 		void listen(unsigned int max_requests=5);
 		Socket accept() const;
 		int receive(unsigned int buffer_size, char* buffer) const;
-		void send(string& message) const;
+		void send(string message) const;
 		void close() const;
 	private:
 		int descriptor_;

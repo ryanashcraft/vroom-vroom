@@ -2,14 +2,17 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+#include <cstdlib>
 
 #include "http_response.h"
 #include "date.h"
+#include "regex_matcher.h"
 
 using namespace std;
 using namespace vv;
 
 static unordered_map<int, string> code_to_status_map({
+	{100, "HTTP/1.1 100 Continue"},
 	{300, "HTTP/1.1 300 OK"},
 	{302, "HTTP/1.1 302 Found"},
 	{400, "HTTP/1.1 400 Bad Request"},
@@ -19,6 +22,7 @@ static unordered_map<int, string> code_to_status_map({
 });
 
 HTTPResponse::HTTPResponse(int code, string& mime, string &content, vector<string>& headers, bool head) :
+	code_(code),
 	status_(code_to_status_map[code]),
 	mime_(mime),
 	content_(content),
@@ -29,6 +33,7 @@ HTTPResponse::HTTPResponse(int code, string& mime, string &content, vector<strin
 }
 
 HTTPResponse::HTTPResponse(string& status, string& mime, string &content, vector<string>& headers, bool head) :
+	code_(status_to_code(status)),
 	status_(status),
 	mime_(mime),
 	content_(content),
@@ -39,10 +44,22 @@ HTTPResponse::HTTPResponse(string& status, string& mime, string &content, vector
 }
 
 HTTPResponse::HTTPResponse(int code, bool head) :
+	code_(code),
 	status_(code_to_status_map[code]),
 	head_(head)
 {
 
+}
+
+int HTTPResponse::status_to_code(string& status) {
+	RegexMatcher code_regex("HTTP/1.1 ([0-9]+)");
+	vector<string> code_matches(code_regex.find_matches(status));
+
+	if (code_matches.size() <= 1) {
+		return -1;
+	}
+
+	return atoi(code_matches[1].c_str());
 }
 
 string HTTPResponse::str() {
@@ -51,8 +68,14 @@ string HTTPResponse::str() {
 	response << "Date: " << Date::now("%a, %d %b %Y %H:%M:%S %Z") << endl;
 	response << "Accept-Ranges: bytes" << endl;
 	response << "Content-Length: " << content_.length() << endl;
-	response << "Connection: close" << endl;
-	response << "Content-Type: " << mime_ << endl;
+
+	if (close_) {
+		response << "Connection: close" << endl;
+	}
+	
+	if (mime_ != "") {
+		response << "Content-Type: " << mime_ << endl;
+	}
 
 	for (string& s : headers_) {
 		response << s << endl;

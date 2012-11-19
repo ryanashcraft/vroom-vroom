@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "server.h"
+#include "http_response.h"
 #include "http_exception.h"
 
 namespace vv {
@@ -17,7 +18,7 @@ namespace vv {
 		void handle();
 	protected:
 		static string accept(const Socket& client);	
-		static string process(const string& message);
+		static HTTPResponse process(const string& message);
 	private:
 		static bool is_valid_http_message(string& message);
 		static unordered_map<string, string> parse_post_data(const string& message);

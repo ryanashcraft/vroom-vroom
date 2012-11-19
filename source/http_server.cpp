@@ -4,13 +4,11 @@
 #include <sstream>
 #include <string>
 #include <thread>
-#include <regex.h>
-#include <cstdlib>
 
 #include "http_server.h"
 #include "file_interpreter.h"
 #include "path_resolution.h"
-#include "http_response.h"
+#include "regex_matcher.h"
 
 using namespace std;
 using namespace vv;
@@ -24,9 +22,16 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 void HTTPServer::handle() {
 	Socket client(socket_.accept());
 	thread client_thread([client] () {
-		string request = accept(client);
-		string reply = process(request);
-		client.send(reply);
+		bool should_continue = true;
+		
+		while (should_continue) {
+			string request = accept(client);
+			cout << request << endl;
+
+			HTTPResponse reply = process(request);
+			client.send(reply.str());
+			should_continue = (reply.get_code() == 100);
+		}
 		client.close();
 	});
 	client_thread.detach();
@@ -53,14 +58,11 @@ string HTTPServer::accept(const Socket& client) {
 bool HTTPServer::is_valid_http_message(string& message) {
 	int content_length = 0;
 
-	regmatch_t matches[2];
-	regex_t content_length_regex;
-	::regcomp(&content_length_regex, "Content-Length:[ \t]*([0-9]+)", REG_EXTENDED);
-	int regexec_retval = ::regexec(&content_length_regex, message.c_str(), 2, matches, 0);
-	::regfree(&content_length_regex);
+	RegexMatcher content_length_regex("Content-Length:[ \t]*([0-9]+)");
+	vector<string> matches = content_length_regex.find_matches(string(message)); 
 
-	if (regexec_retval == 0 && matches[1].rm_so >= 0 && matches[1].rm_eo < message.length()) {
-		content_length = ::atoi(message.substr(matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so).c_str());
+	if (matches.size() >= 2) {
+		content_length = atoi(matches[1].c_str());
 	}
 
 	size_t message_start = message.find("\r\n\r\n");
@@ -76,7 +78,7 @@ bool HTTPServer::is_valid_http_message(string& message) {
 	return false;
 }
 
-string HTTPServer::process(const string& message) {
+HTTPResponse HTTPServer::process(const string& message) {
 	string type;
 	stringstream trimmer;
 	trimmer << message;
@@ -100,8 +102,14 @@ string HTTPServer::process(const string& message) {
 		}
 
 		if (!vv::file_exists(path)) {
-			HTTPResponse response(404, (type == "HEAD"));
-			return response.str();
+			return HTTPResponse(404, (type == "HEAD"));
+		}
+
+		RegexMatcher continue_regex("Expect:[\t ]*100-continue");
+		vector<string> continue_matches = continue_regex.find_matches(string(message)); 
+
+		if (continue_matches.size() > 0) {
+			return HTTPResponse(100, (type == "HEAD"));
 		}
 
 		unique_ptr<FileInterpreter> interpreter = FileInterpreter::file_interpreter_for_path(path);
@@ -117,8 +125,8 @@ string HTTPServer::process(const string& message) {
 			content = interpreter.get()->interpret();
 		} catch (const HTTPException& e) {
 			switch (e.code()) {
-				case 404: return HTTPResponse(404, (type == "HEAD")).str();
-				default:  return HTTPResponse(500, (type == "HEAD")).str();
+				case 404: return HTTPResponse(404, (type == "HEAD"));
+				default:  return HTTPResponse(500, (type == "HEAD"));
 			}
 		}
 
@@ -126,20 +134,20 @@ string HTTPServer::process(const string& message) {
 		string mime = interpreter.get()->mime();
 		for (auto s = headers.begin(); s != headers.end(); ++s) {
 			if (s->find("Location") == 0) {
-				return HTTPResponse(302, mime, content, headers).str();
+				return HTTPResponse(302, mime, content, headers);
 			}
 
 			if (s->find("HTTP/") == 0) {
 				string status(*s);
 				headers.erase(s);
-				return HTTPResponse(status, mime, content, headers, (type == "HEAD")).str();
+				return HTTPResponse(status, mime, content, headers, (type == "HEAD"));
 			}
 		}
 
-		return HTTPResponse(300, mime, content, headers, (type == "HEAD")).str();
+		return HTTPResponse(300, mime, content, headers, (type == "HEAD"));
 	}
 
-	return HTTPResponse(502, (type == "HEAD")).str();
+	return HTTPResponse(502, (type == "HEAD"));
 }
 
 unordered_map<string, string> HTTPServer::parse_post_data(const string& message) {
