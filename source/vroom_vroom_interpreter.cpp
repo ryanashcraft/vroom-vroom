@@ -77,14 +77,13 @@ Handle<Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string
 	string public_cd(vv::get_directory_from_path(vv::system_path_to_public_path(path)));
 	global->Set(String::New(JS_NAME_CURRENT_DIRECTORY), String::New(public_cd.c_str()));
 
-	std::string str;
+	string str;
 
-	file.seekg(0, std::ios::end);   
+	file.seekg(0, ios::end);   
 	str.reserve(file.tellg());
-	file.seekg(0, std::ios::beg);
+	file.seekg(0, ios::beg);
 
-	str.assign((std::istreambuf_iterator<char>(file)),
-	    std::istreambuf_iterator<char>());
+	str.assign((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
 	// Create a string containing the JavaScript source code.
 	Handle<String> source = String::New(str.c_str());
