@@ -1,37 +1,47 @@
-# Ryan Ashcraft
-# 
 # Makefile based off of example from http://content.gpwiki.org/index.php/Makefile
 
-V8HOME=~/Apps/Libraries/V8
-V8INCS=/Users/ryanashcraft/Apps/Libraries/V8/include
+# Uncomment the following line and set the path to the root V8 directory
+# V8HOME = /absolute/path/to/V8
+
+# The compiler
+C++ = g++
 
 # Specify the main target
 TARGET = vroomvroom
-# Default build type
-TYPE = debug
+# Default build type (release or debug)
+TYPE = release
 # Which directories contain source files
 DIRS = source
 # Which directories contain header files
 INCS = include 
 # Which libraries are linked
 LIBS = pthread
+# The static libraries to include
+SLIBS =
+# The target architecture
+ARCH = x64
+
+ifdef V8HOME
+V8INCS = $(V8HOME)/include
+SLIBS += $(V8HOME)/out/$(ARCH).$(TYPE)/libv8_base.a $(V8HOME)/out/$(ARCH).$(TYPE)/libv8_snapshot.a
+endif
 
 # The next blocks change some variables depending on the build type
-ifeq ($(TYPE),debug)
-V8=$(V8HOME)/out/x64.debug/libv8_base.a
-V8+=$(V8HOME)/out/x64.debug/libv8_snapshot.a
-SLIBS += $(V8)
+ifeq ($(TYPE), debug)
+CCPARAM = -std=c++11 -Wall -g -I$(INCS) -I$(V8INCS)
+ifeq ($(C++), clang++)
 LDPARAM = -stdlib=libc++
-CCPARAM = -std=c++11 -stdlib=libc++ -Wall -g -I$(INCS) -I$(V8INCS)
+CCPARAM += -stdlib=libc++
+endif
 MACROS =
 endif
 
 ifeq ($(TYPE), release)
-V8=$(V8HOME)/out/x64.debug/libv8_base.a
-V8+=$(V8HOME)/out/x64.debug/libv8_snapshot.a
-SLIBS += $(V8)
-LDPARAM = -s -stdlib=libc++
 CCPARAM = -std=c++11 -Wall -O2 -I$(INCS) -I$(V8INCS)
+ifeq ($(C++), clang++)
+LDPARAM = -stdlib=libc++
+CCPARAM += -stdlib=libc++
+endif
 MACROS = NDEBUG
 endif
 
@@ -41,8 +51,6 @@ LIBPATH =
 
 # Which files to add to backups, apart from the source code
 EXTRA_FILES = Makefile
-# The compiler
-C++ = clang++
 
 # Where to store object and dependancy files.
 STORE = .make-$(TYPE)
