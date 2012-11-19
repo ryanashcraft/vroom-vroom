@@ -42,7 +42,7 @@ namespace vv {
 		}
 
 		/**
-		 * Abstract function for returning a string interpretation of a file.
+		 * Returns a generated string interpretation of a file.
 		 * @return string interpretation of file
 		 */
 		virtual string interpret() = 0;

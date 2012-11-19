@@ -10,9 +10,22 @@
 namespace vv {
 	using namespace std;
 
+	/**
+	 * Interprets a file as a binary file for an HTTP response.
+	 */
 	class BinaryInterpreter : public vv::FileInterpreter {
 	public:
+		/**
+		 * Creates a binary file interpreter with a file path and mime string.
+		 * @param  path the path of the file to open
+		 * @param  mime the mime type string
+		 * @return      a binary file interpreter
+		 */
 		explicit BinaryInterpreter(const string& path, const string& mime);
+
+		/**
+		 * @see FileInterpreter::interpret
+		 */
 		string interpret();
 	};
 }
