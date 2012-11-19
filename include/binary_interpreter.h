@@ -25,7 +25,7 @@ namespace vv {
 
 		/**
 		 * Returns a string of bytes from a binary file.
-		 * @return string of bytes from file
+		 * @return a string of bytes from file
 		 */
 		string interpret();
 	};
