@@ -24,7 +24,8 @@ namespace vv {
 		explicit BinaryInterpreter(const string& path, const string& mime);
 
 		/**
-		 * @see FileInterpreter::interpret
+		 * Returns a string of bytes from a binary file.
+		 * @return string of bytes from file
 		 */
 		string interpret();
 	};
