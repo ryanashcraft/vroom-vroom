@@ -21,7 +21,7 @@ HTTPServer::HTTPServer(unsigned short port) : Server(port) {
 
 void HTTPServer::handle() {
 	Socket client(socket_.accept());
-	thread client_thread([client] () {
+	thread client_thread([this, client] () {
 		bool should_continue = true;
 		
 		while (should_continue) {
