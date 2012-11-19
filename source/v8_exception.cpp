@@ -10,13 +10,14 @@
 using namespace std;
 using namespace vv;
 
-// Extracts a C string from a V8 Utf8Value.
 const char* ToCString(const v8::String::Utf8Value& value) {
-  return *value ? *value : "<string conversion failed>";
+  return *value ? *value : "";
 }
 
+/**
+ * @see http://v8.googlecode.com/svn/trunk/samples/shell.cc
+ */
 V8Exception::V8Exception(v8::TryCatch* try_catch, const string& path) {
-	// http://v8.googlecode.com/svn/trunk/samples/shell.cc
 	stringstream str;
 
 	v8::HandleScope handle_scope;
