@@ -10,15 +10,19 @@ The V8 JavaScript interpreter library is required for interpreting the server-si
 
 This project depends on several C++11 features. The compiler you use must support C++11 threads, lambda expressions, and unique pointers.
 
-## Compilation
+## Compiling
 
-If the V8 library is installed outside of normal library search paths, you will need to edit the Makefile to define the locations of the V8 static libraries. Specifically, you will need to set the `V8HOME` and `ARCH` variables in. `V8HOME` should be the directory that has the V8 include and out directories. `ARCH` should be the target architecture of the V8 compilation.
+Start by duplicating `Makefile.sample` to `Makefile`. There are default values for all of the variables, but some values may need to be changed to fit your preferences and platform requirements.
 
-Change your preferred compiler by changing the `C++` variable in the Makefile.
+If the V8 library is installed outside of normal library search paths, you will need to edit the Makefile to define the locations of the V8 static libraries by setting the `V8HOME` and `ARCH` variables.
 
-Compile for release or debugging by changing `TYPE`.
+## Running
 
-## Path Resolution
+There is a target for compiling and running. Simply run `make run`. Or simply run the linked `vroomvroom` executable after compiling with `make`.
+
+By default, the server opens on port 8000. This can be defined at runtime by setting a command-line argument (e.g. `vroomvroom 8001`).
+
+## Handling HTTP Requests
 
 HTTP requests are resolved by accessing files from the public directory. If the file does not exist, a 404 HTTP status code will be returned to the client.
 
@@ -26,13 +30,13 @@ HTTP requests are resolved by accessing files from the public directory. If the 
 
 HTTP requests for files with an `.ssjs` extension will be automatically interpreted by V8, and the generated string from running the file will be returned in the HTTP response.
 
-## The `require(path)` JavaScript Function
+### The `require(path)` JavaScript Function
 
 In a server-side JavaScript file, a call to the require function will look up the requested file and interpret it with V8. The return value from this requested file will be returned as a JavaScript object, not necessarily a string, to the caller.
 
 Relative and absolute paths are supported from server-side JavaScript files. These paths are resolved relative to the caller.
 
-## Additional JavaScript Support
+### Additional JavaScript Support
 
 HTTP POST and GET data is initalized before interpreting `.ssjs` files. This can be access in the global `__POST__` and `__GET__` variables, which is an object that acts as a key-value map of the data.
 
