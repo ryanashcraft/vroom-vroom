@@ -94,6 +94,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vv::TextInterpreter Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="text__interpreter_8h_source.html">text_interpreter.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for vv::TextInterpreter:</div>
 <div class="dyncontent">
@@ -106,8 +108,7 @@ Inheritance diagram for vv::TextInterpreter:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af22e0fef7ef9b61456063e49f10ec74e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af22e0fef7ef9b61456063e49f10ec74e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TextInterpreter</b> (const string &amp;path, const string &amp;<a class="el" href="classvv_1_1_file_interpreter.html#abe666d1887125ab870d83199ee25bbe7">mime</a>=&quot;text/plain&quot;)</td></tr>
+<tr class="memitem:af22e0fef7ef9b61456063e49f10ec74e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_text_interpreter.html#af22e0fef7ef9b61456063e49f10ec74e">TextInterpreter</a> (const string &amp;path, const string &amp;<a class="el" href="classvv_1_1_file_interpreter.html#abe666d1887125ab870d83199ee25bbe7">mime</a>=&quot;text/plain&quot;)</td></tr>
 <tr class="separator:af22e0fef7ef9b61456063e49f10ec74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a222145356243fc28d8435a816de46209"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_text_interpreter.html#a222145356243fc28d8435a816de46209">interpret</a> ()</td></tr>
 <tr class="separator:a222145356243fc28d8435a816de46209"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +142,51 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a342bf08da5bab0412fef50498301025f inherit pro_attribs_classvv_1_1_file_interpreter"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_file_interpreter.html#a342bf08da5bab0412fef50498301025f">headers_</a></td></tr>
 <tr class="separator:a342bf08da5bab0412fef50498301025f inherit pro_attribs_classvv_1_1_file_interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Interprets a file as a text file for an HTTP response. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="af22e0fef7ef9b61456063e49f10ec74e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TextInterpreter::TextInterpreter </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>mime</em> = <code>&quot;text/plain&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates a text file interpreter with a file path and a mime type string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>the path of the file to open </td></tr>
+    <tr><td class="paramname">mime</td><td>the mime type string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a222145356243fc28d8435a816de46209"></a>
 <div class="memitem">
@@ -162,8 +208,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns a generated string interpretation of a file. </p>
-<dl class="section return"><dt>Returns</dt><dd>string interpretation of file </dd></dl>
+<p>Returns the string read from the text file. </p>
+<dl class="section return"><dt>Returns</dt><dd>the string read from the text file </dd></dl>
 
 <p>Implements <a class="el" href="classvv_1_1_file_interpreter.html#a541d720bd4385e755a8d4d62f86573d8">vv::FileInterpreter</a>.</p>
 
