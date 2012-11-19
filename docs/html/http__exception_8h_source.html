@@ -94,24 +94,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>vv {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="code" href="classvv_1_1_h_t_t_p_exception.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classvv_1_1_h_t_t_p_exception.html">HTTPException</a> : <span class="keyword">public</span> exception {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classvv_1_1_h_t_t_p_exception.html">HTTPException</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) : code_(code), path_(path) {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        }</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* what() <span class="keyword">const</span> <span class="keywordflow">throw</span>() {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <span class="keywordflow">return</span> <span class="stringliteral">&quot;HTTPException&quot;</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> code() <span class="keyword">const</span> <span class="keywordflow">throw</span>() {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keywordflow">return</span> code_;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code_;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">string</span> path_;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    };</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="classvv_1_1_h_t_t_p_exception.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classvv_1_1_h_t_t_p_exception.html">HTTPException</a> : <span class="keyword">public</span> exception {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="classvv_1_1_h_t_t_p_exception.html#a13d2404239bfc2b00ddba1ca729669d4">   21</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classvv_1_1_h_t_t_p_exception.html#a13d2404239bfc2b00ddba1ca729669d4">HTTPException</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) : code_(code), path_(path) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        }</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="classvv_1_1_h_t_t_p_exception.html#abd7e96fce801bc44c986ea3183a5afa6">   29</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classvv_1_1_h_t_t_p_exception.html#abd7e96fce801bc44c986ea3183a5afa6">what</a>() <span class="keyword">const</span> throw() {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">return</span> <span class="stringliteral">&quot;HTTPException&quot;</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="code" href="classvv_1_1_h_t_t_p_exception.html#abaf4ee42e1e9406a8e8e022e74edb8d7">   37</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classvv_1_1_h_t_t_p_exception.html#abaf4ee42e1e9406a8e8e022e74edb8d7">code</a>() <span class="keyword">const</span> throw() {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> code_;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code_;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">string</span> path_;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    };</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

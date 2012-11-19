@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vv::HTTPException Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="http__exception_8h_source.html">http_exception.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for vv::HTTPException:</div>
 <div class="dyncontent">
@@ -102,16 +104,109 @@ Inheritance diagram for vv::HTTPException:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a13d2404239bfc2b00ddba1ca729669d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13d2404239bfc2b00ddba1ca729669d4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>HTTPException</b> (unsigned int code, const string &amp;path)</td></tr>
+<tr class="memitem:a13d2404239bfc2b00ddba1ca729669d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#a13d2404239bfc2b00ddba1ca729669d4">HTTPException</a> (unsigned int <a class="el" href="classvv_1_1_h_t_t_p_exception.html#abaf4ee42e1e9406a8e8e022e74edb8d7">code</a>, const string &amp;path)</td></tr>
 <tr class="separator:a13d2404239bfc2b00ddba1ca729669d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7e96fce801bc44c986ea3183a5afa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd7e96fce801bc44c986ea3183a5afa6"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>what</b> () const   throw ()</td></tr>
+<tr class="memitem:abd7e96fce801bc44c986ea3183a5afa6"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#abd7e96fce801bc44c986ea3183a5afa6">what</a> () const   throw ()</td></tr>
 <tr class="separator:abd7e96fce801bc44c986ea3183a5afa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abaf4ee42e1e9406a8e8e022e74edb8d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abaf4ee42e1e9406a8e8e022e74edb8d7"></a>
-const int&#160;</td><td class="memItemRight" valign="bottom"><b>code</b> () const   throw ()</td></tr>
+<tr class="memitem:abaf4ee42e1e9406a8e8e022e74edb8d7"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_h_t_t_p_exception.html#abaf4ee42e1e9406a8e8e022e74edb8d7">code</a> () const   throw ()</td></tr>
 <tr class="separator:abaf4ee42e1e9406a8e8e022e74edb8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Subclass of exception to throw when an unexpected event occurs that disrups normal execution for generating an HTTP response. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a13d2404239bfc2b00ddba1ca729669d4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vv::HTTPException::HTTPException </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates an HTTP exception with an HTTP code and related file path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>an HTTP code </td></tr>
+    <tr><td class="paramname">path</td><td>the file path from the HTTP request </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abaf4ee42e1e9406a8e8e022e74edb8d7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int vv::HTTPException::code </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const  throw ()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the HTTP code related to the exception. </p>
+<dl class="section return"><dt>Returns</dt><dd>the HTTP code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abd7e96fce801bc44c986ea3183a5afa6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* vv::HTTPException::what </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const  throw ()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns a string to describe the exception. </p>
+<dl class="section return"><dt>Returns</dt><dd>a character string to describe the exception </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/<a class="el" href="http__exception_8h_source.html">http_exception.h</a></li>
 </ul>
