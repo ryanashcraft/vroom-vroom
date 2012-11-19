@@ -95,6 +95,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vv::SocketException Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="socket__exception_8h_source.html">socket_exception.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for vv::SocketException:</div>
 <div class="dyncontent">
@@ -106,19 +108,104 @@ Inheritance diagram for vv::SocketException:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab130512a68c51ebafa2e1c4dddad2e08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab130512a68c51ebafa2e1c4dddad2e08"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SocketException</b> (const string &amp;message)</td></tr>
+<tr class="memitem:ab130512a68c51ebafa2e1c4dddad2e08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_socket_exception.html#ab130512a68c51ebafa2e1c4dddad2e08">SocketException</a> (const string &amp;message)</td></tr>
 <tr class="separator:ab130512a68c51ebafa2e1c4dddad2e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa05e00078eae0cbe8507e708f25f27a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa05e00078eae0cbe8507e708f25f27a9"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>what</b> () const   throw ()</td></tr>
+<tr class="memitem:aa05e00078eae0cbe8507e708f25f27a9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_socket_exception.html#aa05e00078eae0cbe8507e708f25f27a9">what</a> () const   throw ()</td></tr>
 <tr class="separator:aa05e00078eae0cbe8507e708f25f27a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ae6abf1449d369185b2397615478c05d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6abf1449d369185b2397615478c05d2"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>message_</b></td></tr>
+<tr class="memitem:ae6abf1449d369185b2397615478c05d2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_socket_exception.html#ae6abf1449d369185b2397615478c05d2">message_</a></td></tr>
 <tr class="separator:ae6abf1449d369185b2397615478c05d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Subclass of exception to throw when an unexpected event occurs when dealing with Sockets. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ab130512a68c51ebafa2e1c4dddad2e08"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vv::SocketException::SocketException </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates a socket exception with an error message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>the error message </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the socket exception </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa05e00078eae0cbe8507e708f25f27a9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* vv::SocketException::what </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const  throw ()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the error message string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">the</td><td>error message string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae6abf1449d369185b2397615478c05d2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string vv::SocketException::message_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The error message. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/<a class="el" href="socket__exception_8h_source.html">socket_exception.h</a></li>
 </ul>
