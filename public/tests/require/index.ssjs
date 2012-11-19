@@ -12,14 +12,14 @@
 				'title': 'Oh hai!',
 				'link': {
 					attr: [
-						{'href':'style.css'},
+						{'href':'../media/style.css'},
 						{'rel':'stylesheet'}
 					],
 					single: true
 				},
 				'script': {
 					attr: [
-						{'src':'/test/main.js'}
+						{'src':'../media/main.js'}
 					]
 				}
 			},
@@ -32,7 +32,7 @@
 						{'class':'modal'}
 					],
 					inner: function() {
-						var included = require("/example2.ssjs");
+						var included = require("example2.ssjs");
 						var str = "";
 						for (var m in included.user) {
 							str += included.user[m] + "<br>";
