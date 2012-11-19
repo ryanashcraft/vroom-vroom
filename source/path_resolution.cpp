@@ -14,11 +14,13 @@
 namespace vv {
 	using namespace std;
 
-	// http://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing
-	bool file_exists(const std::string& filename) {
+	/**
+	 * @see http://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing
+	 */
+	bool file_exists(const string& path) {
 	    struct stat buf;
 
-	    if (stat(filename.c_str(), &buf) != -1) {
+	    if (stat(path.c_str(), &buf) != -1) {
 	        return true;
 	    }
 
