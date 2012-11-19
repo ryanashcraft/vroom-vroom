@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['handle',['handle',['../classvv_1_1_h_t_t_p_server.html#ac7e84f9be2f0b9709162eec04412d766',1,'vv::HTTPServer']]],
+  ['handle',['handle',['../classvv_1_1_h_t_t_p_server.html#ac7e84f9be2f0b9709162eec04412d766',1,'vv::HTTPServer::handle()'],['../classvv_1_1_server.html#af88cade7f452e53b4389ef933d6f6eb5',1,'vv::Server::handle()']]],
   ['head_5f',['head_',['../classvv_1_1_h_t_t_p_response.html#a1e118003e3556ca4dab99a567129f954',1,'vv::HTTPResponse']]],
   ['headers_5f',['headers_',['../classvv_1_1_file_interpreter.html#a342bf08da5bab0412fef50498301025f',1,'vv::FileInterpreter::headers_()'],['../classvv_1_1_h_t_t_p_response.html#af4d9f5017ee6591a159dc6f9aaf408e4',1,'vv::HTTPResponse::headers_()']]],
   ['httpexception',['HTTPException',['../classvv_1_1_h_t_t_p_exception.html',1,'vv']]],

@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vv::Server Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="server_8h_source.html">server.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for vv::Server:</div>
 <div class="dyncontent">
@@ -105,22 +107,140 @@ Inheritance diagram for vv::Server:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afdc204b21eae699fb44042665c44bbd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdc204b21eae699fb44042665c44bbd0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Server</b> (unsigned short port)</td></tr>
+<tr class="memitem:afdc204b21eae699fb44042665c44bbd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_server.html#afdc204b21eae699fb44042665c44bbd0">Server</a> (unsigned short port)</td></tr>
 <tr class="separator:afdc204b21eae699fb44042665c44bbd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af88cade7f452e53b4389ef933d6f6eb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af88cade7f452e53b4389ef933d6f6eb5"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle</b> ()=0</td></tr>
+<tr class="memitem:a4b3aa2579cb1c8cd1d069582c14d0fa6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_server.html#a4b3aa2579cb1c8cd1d069582c14d0fa6">~Server</a> ()</td></tr>
+<tr class="separator:a4b3aa2579cb1c8cd1d069582c14d0fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af88cade7f452e53b4389ef933d6f6eb5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_server.html#af88cade7f452e53b4389ef933d6f6eb5">handle</a> ()=0</td></tr>
 <tr class="separator:af88cade7f452e53b4389ef933d6f6eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a83feb06870e7c2b78ca9fa771f8cd086"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83feb06870e7c2b78ca9fa771f8cd086"></a>
-unsigned short&#160;</td><td class="memItemRight" valign="bottom"><b>port_</b></td></tr>
+<tr class="memitem:a83feb06870e7c2b78ca9fa771f8cd086"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_server.html#a83feb06870e7c2b78ca9fa771f8cd086">port_</a></td></tr>
 <tr class="separator:a83feb06870e7c2b78ca9fa771f8cd086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa17f30eed8642424f9b5557eefb2111e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa17f30eed8642424f9b5557eefb2111e"></a>
-<a class="el" href="classvv_1_1_socket.html">Socket</a>&#160;</td><td class="memItemRight" valign="bottom"><b>socket_</b></td></tr>
+<tr class="memitem:aa17f30eed8642424f9b5557eefb2111e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvv_1_1_socket.html">Socket</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvv_1_1_server.html#aa17f30eed8642424f9b5557eefb2111e">socket_</a></td></tr>
 <tr class="separator:aa17f30eed8642424f9b5557eefb2111e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Handles opening and closing of a port for handling incoming connections. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="afdc204b21eae699fb44042665c44bbd0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Server::Server </td>
+          <td>(</td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a server instance on a specific port. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>the port for the server socket </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4b3aa2579cb1c8cd1d069582c14d0fa6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Server::~Server </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Closes the server port. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af88cade7f452e53b4389ef933d6f6eb5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void vv::Server::handle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Abstract function for handling client requests. </p>
+
+<p>Implemented in <a class="el" href="classvv_1_1_h_t_t_p_server.html#ac7e84f9be2f0b9709162eec04412d766">vv::HTTPServer</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a83feb06870e7c2b78ca9fa771f8cd086"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short vv::Server::port_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The port of the server socket. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa17f30eed8642424f9b5557eefb2111e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvv_1_1_socket.html">Socket</a> vv::Server::socket_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The <a class="el" href="classvv_1_1_socket.html">Socket</a> instance used by the server. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="server_8h_source.html">server.h</a></li>
 <li>source/server.cpp</li>
