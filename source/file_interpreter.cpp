@@ -5,7 +5,7 @@
 #include "file_interpreter.h"
 
 #include "text_interpreter.h"
-#include "vroom_vroom_interpreter.h"
+#include "javascript_interpreter.h"
 #include "binary_interpreter.h"
 #include "path_resolution.h"
 
@@ -36,7 +36,7 @@ unique_ptr<FileInterpreter> FileInterpreter::file_interpreter_for_path(const str
 	string extension = vv::get_extension_from_path(path);
 	
 	if (extension == "ssjs") {
-		return unique_ptr<FileInterpreter>(new VroomVroomInterpreter(path));
+		return unique_ptr<FileInterpreter>(new JavaScriptInterpreter(path));
 	} else if (binary_extension_to_mime_map.count(extension) > 0) {
 		return unique_ptr<FileInterpreter>(new BinaryInterpreter(path, binary_extension_to_mime_map[extension]));
 	}else if (text_extension_to_mime_map.count(extension) > 0) {

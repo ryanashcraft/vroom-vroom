@@ -1,6 +1,6 @@
 
-#ifndef VROOM_VROOM_INTERPRETER_H_
-#define VROOM_VROOM_INTERPRETER_H_
+#ifndef javascript_interpreter_H_
+#define javascript_interpreter_H_
 
 #include <v8.h>
 
@@ -12,10 +12,10 @@
 namespace vv {
 	using namespace std;
 
-	class VroomVroomInterpreter : public vv::FileInterpreter {
+	class JavaScriptInterpreter : public vv::FileInterpreter {
 	public:
-		explicit VroomVroomInterpreter(const string& path);
-		virtual ~VroomVroomInterpreter();
+		explicit JavaScriptInterpreter(const string& path);
+		virtual ~JavaScriptInterpreter();
 		string mime() {
 			return "text/html";
 		}

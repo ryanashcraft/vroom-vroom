@@ -4,7 +4,7 @@
 #include <string>
 #include <streambuf>
 
-#include "vroom_vroom_interpreter.h"
+#include "javascript_interpreter.h"
 #include "http_exception.h"
 #include "v8_exception.h"
 #include "path_resolution.h"
@@ -23,16 +23,16 @@ string v8_string_to_string(const String::Utf8Value& value) {
   return *value ? string(*value) : "";
 }
 
-VroomVroomInterpreter::VroomVroomInterpreter(const string& path) : FileInterpreter(path, "text/html") {
+JavaScriptInterpreter::JavaScriptInterpreter(const string& path) : FileInterpreter(path, "text/html") {
 	isolate_ = Isolate::New();
 	isolate_->Enter();
 }
 
-VroomVroomInterpreter::~VroomVroomInterpreter() {
+JavaScriptInterpreter::~JavaScriptInterpreter() {
 	isolate_->Exit();
 }
 
-Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
+Handle<Value> JavaScriptInterpreter::Require(const Arguments& args) {
 	HandleScope handle_scope;
 
 	String::Utf8Value utfpath(args[0]);
@@ -66,12 +66,12 @@ Handle<Value> VroomVroomInterpreter::Require(const Arguments& args) {
     return handle_scope.Close(result);
 }
 
-Handle<Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string& path) {
+Handle<Value> JavaScriptInterpreter::interpret_file(ifstream& file, const string& path) {
 	HandleScope handle_scope;
 	Handle<Object> global = Context::GetCurrent()->Global();
 
 	// Register require JS function
-	Handle<FunctionTemplate> function = FunctionTemplate::New(VroomVroomInterpreter::Require);
+	Handle<FunctionTemplate> function = FunctionTemplate::New(JavaScriptInterpreter::Require);
 	global->Set(String::New("require"), function->GetFunction());
 
 	string public_cd(vv::get_directory_from_path(vv::system_path_to_public_path(path)));
@@ -110,7 +110,7 @@ Handle<Value> VroomVroomInterpreter::interpret_file(ifstream& file, const string
 	return handle_scope.Close(result);
 }
 
-string VroomVroomInterpreter::interpret() {
+string JavaScriptInterpreter::interpret() {
 	ifstream file(path_);
 
 	if (!file.is_open()) {
