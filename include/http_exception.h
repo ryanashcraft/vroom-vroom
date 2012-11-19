@@ -8,7 +8,7 @@ namespace vv {
 	using namespace std;
 
 	/**
-	 * Subclass of exception to throw when an unexpected event occurs that disrups normal
+	 * Subclass of exception to throw when an unexpected event occurs that disrupts normal
 	 * execution for generating an HTTP response.
 	 */
 	class HTTPException : public exception {
