@@ -16,7 +16,7 @@ namespace vv {
 	class RegexMatcher {
 	public:
 		/**
-		 * Creates a RegexMatcher with an extended POSIX regular expression.
+		 * Creates a RegexMatcher with an extended POSIX regular expression string.
 		 */
 		RegexMatcher(string pattern);
 
@@ -28,6 +28,8 @@ namespace vv {
 		/**
 		 * Executes the regular expression on an input string and returns the matching groups
 		 * as a vector of strings.
+		 * @param input	the input string
+		 * @param max_matches	the maximum number of matches returned
 		 */
 		vector<string> find_matches(string input, unsigned int max_matches=32);
 	private:
