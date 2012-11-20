@@ -56,6 +56,7 @@ Custom headers for the HTTP response can be defined in the server-side JavaScrip
 - No support for handling requests with multipart content, thus no support for file uploads
 - No support for various mime types
 - No support for handling requests with `If-Modified-Since` and `If-Unmodified-Since` headers
+- No support for sessions or cookies
 - Untested handling of HTTP 1.0 requests
 - Untested handling of HTTP requests with `Expects: 100 Continue` header
 - Opens and interprets files for HEAD requests
