@@ -66,7 +66,7 @@ Custom headers for the HTTP response can be defined in the server-side JavaScrip
 - No API for storing persistent data or interacting with a database
 - No API for performing sending HTTP requests or email messages
 - File path argument for `require(path)` can request a file outside of the public directory
-- Error handling and logging is lacking with various scenarios (i.e. invalid file path argument in `require(path)`)
+- Error handling and logging is lacking with various scenarios (e.g. invalid file path argument in `require(path)`)
 
 ### Customization
 
