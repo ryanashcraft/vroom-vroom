@@ -45,3 +45,35 @@ HTTP POST and GET data is initalized before interpreting `.ssjs` files. This can
 The parent directory of the interpreted file is stored as a string in the global variable `__CURRENT_DIRECTORY__`.
 
 Custom headers for the HTTP response can be defined in the server-side JavaScript with the global `__HEADERS__` array.
+
+## Known Issues and Limitations
+
+### HTTP
+
+- No support for PUT or DELETE requests
+- Does not accept absolute URL's
+- Does not require or use the `Host` header from HTTP 1.1 requests
+- No support for chunked transfers
+- No support for persistent connections
+- No support for handling requests with multipart content, thus no support for file uploads
+- No support for various mime types
+- No support for handling requests with `If-Modified-Since` and `If-Unmodified-Since` headers
+- Untested handling of HTTP 1.0 requests
+- Untested handling of HTTP requests with `Expects: 100 Continue` header
+- Opens and interprets files for HEAD requests
+
+### Server-Side JavaScript
+
+- No API for retrieving system time
+- No API for storing persistent data or interacting with a database
+- No API for performing sending HTTP requests or email messages
+- File path argument for `require(path)` can request a file outside of the public directory
+- Error handling and logging is lacking with various scenarios (i.e. invalid file path argument in `require(path)`)
+
+### Customization
+
+- No support for custom configurations
+
+### Testing
+
+- There are no proper tests
