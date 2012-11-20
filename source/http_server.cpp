@@ -97,6 +97,8 @@ HTTPResponse HTTPServer::process(const string& message) {
 				path += "index.ssjs";
 			} else if (vv::file_exists(path + "index.html")) {
 				path += "index.html";
+			} else {
+				return HTTPResponse(404, (type == "HEAD"));
 			}
 		}
 
