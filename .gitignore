@@ -1,8 +1,8 @@
-vroomvroom
+/vroomvroom
 *.out
 *.o
-
 *.dSYM
 .make-*
 .DS_Store
 /Makefile
+/public

@@ -21,6 +21,9 @@ SLIBS =
 # The target architecture
 ARCH = x64
 
+PUBLIC = public
+PUBLICDEMO = demos/hello-world
+
 ifdef V8HOME
 V8INCS = $(V8HOME)/include
 SLIBS += $(V8HOME)/out/$(ARCH).$(TYPE)/libv8_base.a $(V8HOME)/out/$(ARCH).$(TYPE)/libv8_snapshot.a
@@ -72,6 +75,7 @@ $(TARGET): dirs $(OBJECTS)
 		@echo Linking $(TARGET).
 		@$(C++) -o $(TARGET) $(OBJECTS) $(SLIBS) $(LDPARAM) $(foreach LIBRARY, \
 			$(LIBS),-l$(LIBRARY)) $(foreach LIB,$(LIBPATH),-L$(LIB))
+		@test -d $(PUBLIC) || cp -r $(PUBLICDEMO) $(PUBLIC)
 
 # Rule for creating object file and .d file, the sed magic is to add
 # the object path at the start of the file because the files gcc
