@@ -49,7 +49,7 @@ Custom headers for the HTTP response can be defined in the server-side JavaScrip
 ### HTTP
 
 - No support for PUT or DELETE requests
-- Does not accept absolute URL's
+- Does not accept absolute URLs
 - Does not require or use the `Host` header from HTTP 1.1 requests
 - No support for chunked transfers
 - No support for persistent connections
