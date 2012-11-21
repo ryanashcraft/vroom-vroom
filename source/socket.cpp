@@ -33,7 +33,7 @@ void Socket::bind(unsigned short port) {
 
 void Socket::listen(unsigned int max_requests) {
     if (::listen(descriptor_, max_requests) < 0) {
-    	// @todo throw SocketException
+        throw SocketException("socket listen failed"); 
     }
 }
 
@@ -44,7 +44,7 @@ Socket Socket::accept() const {
 
 	/* Wait for a client to connect */
     if ((client_descriptor = ::accept(descriptor_, (struct sockaddr *) &client_address, &client_address_size)) < 0) {
-    	// @todo throw SocketException
+        throw SocketException("socket accept failed"); 
    }
 
    return Socket(client_descriptor);
@@ -62,7 +62,7 @@ int Socket::receive(unsigned int buffer_size, char* buffer) const {
 
 void Socket::send(string message) const {
 	if ((int)::send(descriptor_, message.c_str(), message.length(), 0) != (int)message.length()) {
-		// @todo throw SocketException
+        throw SocketException("socket send failed"); 
 	}
 }
 
