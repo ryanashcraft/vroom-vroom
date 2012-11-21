@@ -39,7 +39,7 @@ namespace vv {
 		 * Listens to requests from incoming connections.
 		 * @param max_requests the maximum number of simultaneous requests
 		 */
-		void listen(unsigned int max_requests=5);
+		void listen(unsigned int max_requests = 5);
 
 		/**
 		 * Accepts an incoming connection from a client.
