@@ -28,6 +28,7 @@ void HTTPServer::handle() {
 			string request = accept(client);
 
 			HTTPResponse reply = process(request);
+
 			client.send(reply.str());
 			should_continue = (reply.get_code() == 100);
 		}
@@ -64,17 +65,19 @@ bool HTTPServer::is_valid_http_message(string& message) {
 		content_length = atoi(matches[1].c_str());
 	}
 
-	size_t message_start = message.find("\r\n\r\n");
+	size_t content_start = message.find("\r\n\r\n");
 
-	if (message_start == string::npos) {
+	if (content_start == string::npos) {
 		return false;
 	}
 
-	if (message.substr(message_start).length() - 4 == content_length) {
-		return true;
+	if (message.length() < content_start + content_length + 4) {
+		return false;
 	}
 
-	return false;
+	message.erase(content_start + content_length + 4, string::npos);
+
+	return true;
 }
 
 HTTPResponse HTTPServer::process(const string& message) {
